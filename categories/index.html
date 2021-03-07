@@ -485,15 +485,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="social-wrapper">
           
             
-              <a href="/atom.xml"
-                class="social fas fa-rss flat-btn"
-                target="_blank"
-                rel="external nofollow noopener noreferrer">
-                
-              </a>
-            
-          
-            
               <a href="mailto:745567906@qq.com"
                 class="social fas fa-envelope flat-btn"
                 target="_blank"
@@ -1084,7 +1075,7 @@ var loadCSS = function( href, before, media, attributes ){
 
   
   
-<script src="/js/valine.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"></script>
 
 
 <script>
@@ -1109,14 +1100,14 @@ var loadCSS = function( href, before, media, attributes ){
   }
   function pjax_valine() {
     if(!document.querySelectorAll("#valine_container")[0])return;
-    let pagePlaceholder = pdata.commentPlaceholder || "快来评论吧~";
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论啊~";
     let path = pdata.commentPath;
     if (path.length == 0) {
-      let defaultPath = '';
+      let defaultPath = '/';
       path = defaultPath || decodeURI(window.location.pathname);
     }
     var valine = new Valine();
-    valine.init(Object.assign({"path":null,"placeholder":"快来评论吧~","appId":null,"appKey":null,"meta":["nick","mail","link"],"requiredFields":["nick","mail"],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false}, {
+    valine.init(Object.assign({"path":"/","placeholder":"快来评论啊~","appId":"0BeyVbHDkQX24Fe67Ramvgqj-gzGzoHsz","appKey":"Ar5VCkWBPCxn5iMCYsdm1e6h","meta":["nick"],"requiredFields":[],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false,"js":"https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"}, {
       el: '#valine_container',
       path: path,
       placeholder: pagePlaceholder,
