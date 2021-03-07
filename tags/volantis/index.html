@@ -24,7 +24,7 @@
 
   <!-- 页面元数据 -->
   
-  <title>归档：2021 - 刘先生的博客</title>
+  <title>标签：volantis - 刘先生的博客</title>
   
 
   
@@ -104,7 +104,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -355,7 +355,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="half" class='cover-wrapper  dock' style="display: ;">
+        <div id="full" class='cover-wrapper  dock' style="display: none;">
           
             <div id='cover-backstretch'></div>
           
@@ -386,14 +386,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="body-wrapper" id="pjax-container">
           
 
+
 <div class='l_main'>
-	
-		
+  
+    
+      
   <section class="post-list">
     
       
-        
-          
         
           
         
@@ -460,78 +460,6 @@ A Wonderful Th...
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
-  
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/03/06/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">
-        MarkDown语法
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        
-标题使用标题时# 
-段落这个第一个段落内容
-这是第二个段落内容
-区块引用
-区块引用
-
-超链接百度
-图片
-无序列表
-无序列表
-无序列表
-无序列表有序列表
-
-
-有序列表
-有序列表分割线
-
-
-
-
-
-
-
-
-
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-03-06</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/hexo/">hexo</a>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/03/06/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/'>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-  
-
-</div>
-
-          </div>
-        
-      
     
   </section>
   
@@ -539,7 +467,8 @@ A Wonderful Th...
   
 
 
-	
+    
+  
 </div>
 <aside class='l_side'>
   
@@ -675,14 +604,14 @@ A Wonderful Th...
   // header 这里无论是否开启pjax都需要
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.remove("show");
+  l_header.classList.add("show");
   
   
     // cover
     var cover_wrapper=document.querySelector('.cover-wrapper');
     
-    cover_wrapper.id="half";
-    cover_wrapper.style.display="";
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
     
   
 </script>

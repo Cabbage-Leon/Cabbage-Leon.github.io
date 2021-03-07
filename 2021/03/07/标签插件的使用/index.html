@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta http-equiv='x-dns-prefetch-control' content='on' />
@@ -24,7 +22,9 @@
 
   <!-- 页面元数据 -->
   
-  <title>归档：2021 - 刘先生的博客</title>
+  <title>标签插件的使用 - 刘先生的博客</title>
+  
+    <meta name="keywords" content="volantis">
   
 
   
@@ -104,7 +104,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <body>
     
 
-<header id="l_header" class="l_header auto shadow blur " style='opacity: 0' >
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
     <div class='nav-sub'>
@@ -355,7 +355,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div id="l_cover">
   
     
-        <div id="half" class='cover-wrapper  dock' style="display: ;">
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
           
             <div id='cover-backstretch'></div>
           
@@ -387,97 +387,289 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 
 <div class='l_main'>
-	
-		
-  <section class="post-list">
-    
-      
-        
-          
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
   
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/03/07/%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">
-        标签插件的使用
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
-      
-        
-text这是一些文本样式标签：
-带 下划线 的文本
-带 着重号 的文本
-带 波浪线 的文本
-带 删除线 的文本
-键盘样式的文本 command + D
-密码样式的文本：这里没有验证码
-span文本内容
 
-彩色文字在一段话中方便插入各种颜色的标签，包括：红色、黄色、绿色、青色、蓝色、灰色。
-超大号文字文档「开始」页面中的标题部分就是超大号文字。
-Volantis
-A Wonderful Th...
-      
-    
-  </div>
+
   
-    <div class='meta-v3' line_style='solid'>
-      <div>
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        标签插件的使用
+      </h1>
+      <div class='new-meta-box'>
         
-        <time>2021-03-07</time>
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://avatars.githubusercontent.com/u/31495215?s=400&u=3186d834482e8e93158b1e650122ce151ba8dbb2&v=4">
+    <p>Leon</p>
+  </a>
+</div>
+
+          
         
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/hexo/">hexo</a>
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/hexo/">hexo</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年3月7日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="标签插件的使用" data-path="/2021/03/07/%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
         
       </div>
+    
+  </div>
+
+
+  
+  
+  <span id="more"></span>
+<h2 id="text"><a href="#text" class="headerlink" title="text"></a>text</h2><p>这是一些文本样式标签：</p>
+<p>带 <u>下划线</u> 的文本</p>
+<p>带 <emp>着重号</emp> 的文本</p>
+<p>带 <wavy>波浪线</wavy> 的文本</p>
+<p>带 <del>删除线</del> 的文本</p>
+<p>键盘样式的文本 <kbd>command</kbd> + <kbd>D</kbd></p>
+<p>密码样式的文本：<psw>这里没有验证码</psw></p>
+<h2 id="span"><a href="#span" class="headerlink" title="span"></a>span</h2><span class='p 样式参数'>文本内容</span>
+
+<h4 id="彩色文字"><a href="#彩色文字" class="headerlink" title="彩色文字"></a>彩色文字</h4><p>在一段话中方便插入各种颜色的标签，包括：<span class='p red'>红色</span>、<span class='p yellow'>黄色</span>、<span class='p green'>绿色</span>、<span class='p cyan'>青色</span>、<span class='p blue'>蓝色</span>、<span class='p gray'>灰色</span>。</p>
+<h4 id="超大号文字"><a href="#超大号文字" class="headerlink" title="超大号文字"></a>超大号文字</h4><p>文档「开始」页面中的标题部分就是超大号文字。</p>
+<span class='p center logo large'>Volantis</span>
+<span class='p center small'>A Wonderful Theme for Hexo</span>
+
+<h2 id="p"><a href="#p" class="headerlink" title="p"></a>p</h2><p class='p 样式参数'>文本内容</p> 
+
+<h4 id="彩色文字-1"><a href="#彩色文字-1" class="headerlink" title="彩色文字"></a>彩色文字</h4><p>在一段话中方便插入各种颜色的标签，包括：<p class='p red'>红色</p>、<p class='p yellow'>黄色</p>、<p class='p green'>绿色</p>、<p class='p cyan'>青色</p>、<p class='p blue'>蓝色</p>、<p class='p gray'>灰色</p>。</p>
+<h4 id="超大号文字-1"><a href="#超大号文字-1" class="headerlink" title="超大号文字"></a>超大号文字</h4><p>文档「开始」页面中的标题部分就是超大号文字。</p>
+<p class='p center logo large'>Volantis</p>
+<p class='p center small'>A Wonderful Theme for Hexo</p>
+
+<h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><div class="note 样式参数"><p>文本内容</p></div>
+
+<h4 id="经典用法"><a href="#经典用法" class="headerlink" title="经典用法"></a>经典用法</h4><div class="note "><p>可以在配置文件中设置默认样式，为简单的一句话提供最的简便写法。</p></div>
+<div class="note quote"><p>note quote 适合引用一段话</p></div>
+<div class="note info"><p>note info 默认主题色，适合中性的信息</p></div>
+<div class="note warning"><p>note warning 默认黄色，适合警告性的信息</p></div>
+<div class="note danger"><p>note error/danger 默认红色，适合危险性的信息</p></div>
+<div class="note success"><p>note done/success 默认绿色，适合正确操作的信息</p></div>
+
+<h4 id="更多图标"><a href="#更多图标" class="headerlink" title="更多图标"></a>更多图标</h4><p>这些都是默认样式，可以手动加上颜色：</p>
+<div class="note radiation"><p>note radiation 默认样式</p></div>
+<div class="note radiation yellow"><p>note radiation yellow 可以加上颜色</p></div>
+<div class="note bug red"><p>note bug red 说明还存在的一些故障</p></div>
+<div class="note link green"><p>note link green 可以放置一些链接</p></div>
+<div class="note paperclip blue"><p>note paperclip blue 放置一些附件链接</p></div>
+<div class="note todo"><p>note todo 待办事项</p></div>
+<div class="note guide clear"><p>note guide clear 可以加上一段向导</p></div>
+<div class="note download"><p>note download 可以放置下载链接</p></div>
+<div class="note message gray"><p>note message gray 一段消息</p></div>
+<div class="note up"><p>note up 可以说明如何进行更新</p></div>
+<div class="note undo light"><p>note undo light 可以说明如何撤销或者回退</p></div>
+
+<h2 id="noteblock"><a href="#noteblock" class="headerlink" title="noteblock"></a>noteblock</h2><div class="note 样式参数（可选）"><p><strong>标题（可选）</strong></p><p>文本段落</p></div>
+
+<div class="note "><p><strong>标题（可选）</strong></p><p>Windows 10不是為所有人設計,而是為每個人設計</p><div class="note done"><p>嵌套测试： 请坐和放宽，我正在帮你搞定一切…</p></div><details yellow><summary> Folding 测试： 点击查看更多 </summary>              <div class='content'>              <div class="note warning"><p>不要说我们没有警告过你</p></div><div class="note bug red"><p>我们都有不顺利的时候</p></div>              </div>            </details></div>
+
+<h2 id="checkbox"><a href="#checkbox" class="headerlink" title="checkbox"></a>checkbox</h2><div class='checkbox 样式参数（可选）'><input type="checkbox" />
+            <p>文本（支持简单md）</p>
+            </div>
+<div class='checkbox'><input type="checkbox" />
+            <p>纯文本测试</p>
+            </div>
+<div class='checkbox checked'><input type="checkbox" checked="checked"/>
+            <p>支持简单的 <a target="_blank" rel="noopener" href="https://guides.github.com/features/mastering-markdown/">markdown</a> 语法</p>
+            </div>
+<div class='checkbox red'><input type="checkbox" />
+            <p>支持自定义颜色</p>
+            </div>
+<div class='checkbox green checked'><input type="checkbox" checked="checked"/>
+            <p>绿色 + 默认选中</p>
+            </div>
+<div class='checkbox yellow checked'><input type="checkbox" checked="checked"/>
+            <p>黄色 + 默认选中</p>
+            </div>
+<div class='checkbox cyan checked'><input type="checkbox" checked="checked"/>
+            <p>青色 + 默认选中</p>
+            </div>
+<div class='checkbox blue checked'><input type="checkbox" checked="checked"/>
+            <p>蓝色 + 默认选中</p>
+            </div>
+<div class='checkbox plus green checked'><input type="checkbox" checked="checked"/>
+            <p>增加</p>
+            </div>
+<div class='checkbox minus yellow checked'><input type="checkbox" checked="checked"/>
+            <p>减少</p>
+            </div>
+<div class='checkbox times red checked'><input type="checkbox" checked="checked"/>
+            <p>叉</p>
+            </div>
+
+<h2 id="timeline"><a href="#timeline" class="headerlink" title="timeline"></a>timeline</h2><div class="timeline"><p class='p h2'>时间线标题（可选）</p>
+<div class="timenode"><div class="meta"><p><p>时间节点（标题）</p>
+</p></div><div class="body"><p>正文内容</p></div></div>
+
+<div class="timenode"><div class="meta"><p><p>时间节点（标题）</p>
+</p></div><div class="body"><p>正文内容</p></div></div>
+</div>
+
+<div class="timeline">
+<div class="timenode"><div class="meta"><p><p>2020-07-24 <a target="_blank" rel="noopener" href="https://github.com/volantis-x/hexo-theme-volantis/releases">2.6.6 -&gt; 3.0</a></p>
+</p></div><div class="body"><ol><li>如果有 <code>hexo-lazyload-image</code> 插件，需要删除并重新安装最新版本，设置 <code>lazyload.isSPA: true</code>。</li><li>2.x 版本的 css 和 js 不适用于 3.x 版本，如果使用了 <code>use_cdn: true</code> 则需要删除。</li><li>2.x 版本的 fancybox 标签在 3.x 版本中被重命名为 gallery 。</li><li>2.x 版本的置顶 <code>top: true</code> 改为了 <code>pin: true</code>，并且同样适用于 <code>layout: page</code> 的页面。</li><li>如果使用了 <code>hexo-offline</code> 插件，建议卸载，3.0 版本默认开启了 pjax 服务。</li></ol></div></div>
+
+<div class="timenode"><div class="meta"><p><p>2020-05-15 <a target="_blank" rel="noopener" href="https://github.com/volantis-x/hexo-theme-volantis/releases/tag/2.6.6">2.6.3 -&gt; 2.6.6</a></p>
+</p></div><div class="body"><p>不需要额外处理。</p></div></div>
+
+<div class="timenode"><div class="meta"><p><p>2020-04-20 <a target="_blank" rel="noopener" href="https://github.com/volantis-x/hexo-theme-volantis/releases/tag/2.6.3">2.6.2 -&gt; 2.6.3</a></p>
+</p></div><div class="body"><ol><li>全局搜索 <code>seotitle</code> 并替换为 <code>seo_title</code>。</li><li>group 组件的索引规则有变，使用 group 组件的文章内，<code>group: group_name</code> 对应的组件名必须是 <code>group_name</code>。</li><li>group 组件的列表名优先显示文章的 <code>short_title</code> 其次是 <code>title</code>。</li></ol></div></div>
+</div>
+
+<h2 id="site"><a href="#site" class="headerlink" title="site"></a>site</h2><div class="site-card-group"><a class="site-card" target="_blank" rel="noopener" href="https://xaoxuu.com"><div class="img"><img src="https://i.loli.net/2020/08/21/VuSwWZ1xAeUHEBC.jpg" class="lazyload" data-srcset="https://i.loli.net/2020/08/21/VuSwWZ1xAeUHEBC.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/></div><div class="info"><img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/avatar/avatar.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/avatar/avatar.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/><span class="title">xaoxuu</span><span class="desc">简约风格</span></div></a>
+<a class="site-card" target="_blank" rel="noopener" href="https://inkss.cn"><div class="img"><img src="https://i.loli.net/2020/08/21/Vzbu3i8fXs6Nh5Y.jpg" class="lazyload" data-srcset="https://i.loli.net/2020/08/21/Vzbu3i8fXs6Nh5Y.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/></div><div class="info"><img src="https://cdn.jsdelivr.net/gh/inkss/common@master/static/web/avatar.jpg" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/inkss/common@master/static/web/avatar.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/><span class="title">inkss</span><span class="desc">这是一段关于这个网站的描述文字</span></div></a>
+<a class="site-card" target="_blank" rel="noopener" href="https://blog.mhuig.top"><div class="img"><img src="https://i.loli.net/2020/08/22/d24zpPlhLYWX6D1.png" class="lazyload" data-srcset="https://i.loli.net/2020/08/22/d24zpPlhLYWX6D1.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/></div><div class="info"><img src="https://cdn.jsdelivr.net/gh/MHuiG/imgbed@master/data/p.png" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/MHuiG/imgbed@master/data/p.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/><span class="title">MHuiG</span><span class="desc">这是一段关于这个网站的描述文字</span></div></a>
+<a class="site-card" target="_blank" rel="noopener" href="https://colsrch.top"><div class="img"><img src="https://i.loli.net/2020/08/22/dFRWXm52OVu8qfK.png" class="lazyload" data-srcset="https://i.loli.net/2020/08/22/dFRWXm52OVu8qfK.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/></div><div class="info"><img src="https://cdn.jsdelivr.net/gh/Colsrch/images/Colsrch/avatar.jpg" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/Colsrch/images/Colsrch/avatar.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/><span class="title">Colsrch</span><span class="desc">这是一段关于这个网站的描述文字</span></div></a>
+<a class="site-card" target="_blank" rel="noopener" href="https://linhk1606.github.io"><div class="img"><img src="https://i.loli.net/2020/08/21/3PmGLCKicnfow1x.png" class="lazyload" data-srcset="https://i.loli.net/2020/08/21/3PmGLCKicnfow1x.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/></div><div class="info"><img src="https://i.loli.net/2020/02/09/PN7I5RJfFtA93r2.png" class="lazyload" data-srcset="https://i.loli.net/2020/02/09/PN7I5RJfFtA93r2.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="/><span class="title">Linhk1606</span><span class="desc">这是一段关于这个网站的描述文字</span></div></a></div>
+
+<h2 id="inlineimage"><a href="#inlineimage" class="headerlink" title="inlineimage"></a>inlineimage</h2><img no-lazy class="inline" src="图片链接" style="height:高度（可选）;"/>
+
+<p>这是 <img no-lazy class="inline" src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/aru-l/0000.gif" style="height:1.5em"/> 一段话。</p>
+<p>这又是 <img no-lazy class="inline" src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/aru-l/5150.gif" style="height:40px;"/> 一段话。</p>
+<h2 id="gallery"><a href="#gallery" class="headerlink" title="gallery"></a>gallery</h2><div class="gallery 参数">
+              <p><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/B18FCBB3-67FD-48CC-B4F3-457BA145F17A.jpeg" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/B18FCBB3-67FD-48CC-B4F3-457BA145F17A.jpeg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图片描述"><br><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/67239FBB-E15D-4F4F-8EE8-0F1C9F3C4E7C.jpeg" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/67239FBB-E15D-4F4F-8EE8-0F1C9F3C4E7C.jpeg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="></p>
+            </div>
+
+<div class="gallery ">
+              <p><img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/41F215B9-261F-48B4-80B5-4E86E165259E.jpeg" class="lazyload" data-srcset="https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/41F215B9-261F-48B4-80B5-4E86E165259E.jpeg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图片描述"></p>
+            </div>
+
+<h2 id="audio"><a href="#audio" class="headerlink" title="audio"></a>audio</h2><div class="audio"><audio controls preload><source src='音频链接' type='audio/mp3'>Your browser does not support the audio tag.</audio></div>
+
+<div class="audio"><audio controls preload><source src='https://github.com/volantis-x/volantis-docs/releases/download/assets/Lumia1020.mp3' type='audio/mp3'>Your browser does not support the audio tag.</audio></div>
+
+<h2 id="video"><a href="#video" class="headerlink" title="video"></a>video</h2><div class="video"><video controls preload><source src='视频链接' type='video/mp4'>Your browser does not support the video tag.</video></div>
+
+<div class="video"><video controls preload><source src='https://github.com/volantis-x/volantis-docs/releases/download/assets/IMG_0341.mov' type='video/mp4'>Your browser does not support the video tag.</video></div>
+
+  
+  
+    
+    <div class='footer'>
       
-        <div>
-          <a class='readmore' href='/2021/03/07/%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/'>
-            阅读全文
-          </a>
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+              
+                <p>本文永久链接是：<a href=https://www.iwhero.com/2021/03/07/%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/>https://www.iwhero.com/2021/03/07/%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/</a></p>
+              
+            
+          </blockquote>
         </div>
+      
       
     </div>
   
+  
+    
 
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-07T18:31:13+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2021年3月7日</p>
+  </a>
 </div>
 
-          </div>
         
       
         
-          <div class='post-wrapper'>
-            <div class="post post-v3 white-box reveal shadow">
+          
   
-  
-  
-  
-    
-    <h2 class="article-title" >
-      <a href="/2021/03/06/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">
-        MarkDown语法
-      </a>
-    </h2>
-  
-  <div class='md'>
-    
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/volantis/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>volantis</p></a></div>
+
+
+        
       
         
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/03/06/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/'>
+          <p class='title'>MarkDown语法<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>
 标题使用标题时# 
 段落这个第一个段落内容
 这是第二个段落内容
@@ -499,47 +691,30 @@ A Wonderful Th...
 
 
 
-
-
-
-
-
-      
-    
-  </div>
-  
-    <div class='meta-v3' line_style='solid'>
-      <div>
-        
-        <time>2021-03-06</time>
-        
-          <span class="dot"></span>
-          <a class="category-link" href="/categories/hexo/">hexo</a>
-        
-      </div>
-      
-        <div>
-          <a class='readmore' href='/2021/03/06/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/'>
-            阅读全文
-          </a>
-        </div>
+...</p>
+        </a>
       
     </div>
   
+</article>
 
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
 </div>
 
-          </div>
-        
-      
-    
-  </section>
-  
-    
-  
+  </article>
 
 
-	
+
+
+
+
 </div>
 <aside class='l_side'>
   
@@ -547,119 +722,28 @@ A Wonderful Th...
     
     
 
-<section class="widget blogger shadow desktop">
-  <div class='content'>
-    
-      
-        <a class='avatar flat-box rectangle' href='/about/'>
-          <img no-lazy src='https://avatars.githubusercontent.com/u/31495215?s=400&u=3186d834482e8e93158b1e650122ce151ba8dbb2&v=4'/>
-        </a>
-      
-    
-    
-      <div class='text'>
-        
-          <h2>Cabbage</h2>
-        
-        
-        
-          <p><span id="jinrishici-sentence">刘先生的博客</span></p>
-          <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-        
-      </div>
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="mailto:745567907@qq.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="https://github.com/Cabbage-Leon/"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-          
-            <a href="/"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-              
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
 
-  
 
-  
-    
-    
-  
-
-  <section class="widget category shadow desktop">
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
     
   <header>
     
-      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
     
   </header>
 
 
     <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/categories/hexo/" href="/categories/hexo/"
-            id="categorieshexo"
-            ><div class='name'>hexo</div><div class='badge'>(2)</div></a></li>
-        
-      </ul>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#text"><span class="toc-text">text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#span"><span class="toc-text">span</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A9%E8%89%B2%E6%96%87%E5%AD%97"><span class="toc-text">彩色文字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E5%A4%A7%E5%8F%B7%E6%96%87%E5%AD%97"><span class="toc-text">超大号文字</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#p"><span class="toc-text">p</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A9%E8%89%B2%E6%96%87%E5%AD%97-1"><span class="toc-text">彩色文字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E5%A4%A7%E5%8F%B7%E6%96%87%E5%AD%97-1"><span class="toc-text">超大号文字</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#note"><span class="toc-text">note</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E7%94%A8%E6%B3%95"><span class="toc-text">经典用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E5%9B%BE%E6%A0%87"><span class="toc-text">更多图标</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#noteblock"><span class="toc-text">noteblock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#checkbox"><span class="toc-text">checkbox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#timeline"><span class="toc-text">timeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#site"><span class="toc-text">site</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inlineimage"><span class="toc-text">inlineimage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gallery"><span class="toc-text">gallery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#audio"><span class="toc-text">audio</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#video"><span class="toc-text">video</span></a></li></ol>
     </div>
   </section>
 
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud shadow desktop mobile">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>热门标签</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/volantis/" style="font-size: 14px; color: #999">volantis</a>
-    </div>
-  </section>
-
-
-  
 
   
 
 
 </aside>
+
 
 
 		  
@@ -668,21 +752,21 @@ A Wonderful Th...
 
 <script>
   window.pdata={}
-  pdata.ispage=false;
-  pdata.postTitle="";
+  pdata.ispage=true;
+  pdata.postTitle="标签插件的使用";
   pdata.commentPath="";
   pdata.commentPlaceholder="";
   // header 这里无论是否开启pjax都需要
   var l_header=document.getElementById("l_header");
   
-  l_header.classList.remove("show");
+  l_header.classList.add("show");
   
   
     // cover
     var cover_wrapper=document.querySelector('.cover-wrapper');
     
-    cover_wrapper.id="half";
-    cover_wrapper.style.display="";
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
     
   
 </script>
