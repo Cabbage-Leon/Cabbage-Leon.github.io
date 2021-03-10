@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>使用ElasticSearch，Kibana，ASP.NET Core和Docker可视化数据 - Learner</title>
+  
+    <meta name="keywords" content="elasticsearch,docker,Kibana">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://avatars.githubusercontent.com/u/31495215?s=400&u=3186d834482e8e93158b1e650122ce151ba8dbb2&v=4'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="搜索" />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div id='cover-backstretch'></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">不积跬步，无以至千里。</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        使用ElasticSearch，Kibana，ASP.NET Core和Docker可视化数据
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://avatars.githubusercontent.com/u/31495215?s=400&u=3186d834482e8e93158b1e650122ce151ba8dbb2&v=4">
+    <p>Leon</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/elasticsearch/">elasticsearch</a><span class="sep"></span><a class="category-link" href="/categories/elasticsearch/docker/">docker</a><span class="sep"></span><a class="category-link" href="/categories/elasticsearch/docker/Kibana/">Kibana</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年3月9日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="使用ElasticSearch，Kibana，ASP.NET Core和Docker可视化数据" data-path="/2021/03/09/%E4%BD%BF%E7%94%A8ElasticSearch%EF%BC%8CKibana%EF%BC%8CASP-NET-Core%E5%92%8CDocker%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <span id="more"></span>
+
+<p>背景：<br>目前在做酒店项目，酒店分多个板块，其中一块需要整合供应商酒店资源。考虑到酒店资源的数据会随这接入供应商的数量增多而增多，对数据存储会有很高的要求，综合考虑下还是选择了Elasticsearch。</p>
+<p>原文地址：<a target="_blank" rel="noopener" href="http://www.dotnetcurry.com/aspnet/1354/elastic-search-kibana-in-docker-dotnet-core-app">http://www.dotnetcurry.com/aspnet/1354/elastic-search-kibana-in-docker-dotnet-core-app</a></p>
+<p>想要轻松地通过许多不同的方式查询数据，甚至是从未预料到的方式？想要以多种方式可视化日志？同时支持基于时间、文本和其他类型的即时过滤器？<br>借助于 Elastic stack 的卓越性能和可扩展方式的优点，我们将通过两个示例轻松实现。</p>
+<p>本文由 DNC Magazine for Developers and Architects 发布。 <a target="_blank" rel="noopener" href="http://www.dotnetcurry.net/s/dnc-mag-29th-single">从这里下载此杂志</a>[PDF] 或 <a target="_blank" rel="noopener" href="http://www.dotnetcurry.com/magazine/">免费订阅本杂志</a> 下载所有以前和当前的版本版本。</p>
+<p>在这篇文章中，我将介绍流行的搜索引擎 Elasticsearch，其配套的可视化应用 Kibana，并展示如何对.NET核心可以轻松地与 Elastic stack 整合在一块。</p>
+<p>在这篇文章中，我将介绍流行的搜索引擎 Elasticsearch，其配套的可视化应用 Kibana，并展示如何对.NET核心可以轻松地与 Elastic stack 整合在一块。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-5ad2733917b2ddf4.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-5ad2733917b2ddf4.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="架构"></p>
+<p>Elasticsearch和.Net Core</p>
+<p>我们将开始探索 Elasticsearch 的 REST API ，通过索引和查询某些数据。接着，我们将使用Elasticsearch官方的 .Net API 完成类似的练习。一旦熟悉 Elasticsearch 及其 API 后，我们将使用 .Net Core 创建一个日志模块，并将数据发送到 Elasticsearch 。Kibana紧随其中，以有趣的方式可视化 Elasticsearch 的索引数据。<br>我迫切希望你会认为这篇文章十分有趣，并且想要了解更多关于Elastic的强大之处。</p>
+<p>本文假设您已经了解 C＃和 REST API 的基本知识。使用 Visual Studio，Postman 和 Docker 等工具，但您可以轻松使用 VS Code 和 Fiddler 等替代方案。</p>
+<h2 id="Elasticsearch-简介"><a href="#Elasticsearch-简介" class="headerlink" title="Elasticsearch - 简介"></a>Elasticsearch - 简介</h2><p>Elasticsearch 作为核心的部分，是一个具有强大索引功能的文档存储库，并且可以通过 REST API 来搜索数据。它使用 Java 编写，基于 Apache Lucene，尽管这些细节隐藏在 API 中。<br>通过被索引的字段，可以用许多不同的聚合方式找到任何被存储(索引)的文档。<br>但是，ElasticSearch不仅仅只提供对这些被索引文档的强大搜索功能。<br>快速、分布式、水平扩展，支持实时文档存储和分析，支持数百台服务器和 PB 级索引数据。同时作为 Elastic stack (aka ELK) 的核心，提供了诸如 LogStash、Kibana 和更多的强大应用。<br>Kibana 是 Elasticsearch 中专门提供强有力的可视化查询Web应用程序。使用Kibana，能非常简单地为 Elasticsearch 中索引的数据创建查询、图表和仪表盘。<br>Elasticsearch开放了一个 REST API，你会发现许多文档示例是 HTTP 调用，你可以尝试使用 curl 或 postman 等工具。当然，这个 API 的客户端已经用许多不同的语言编写，包括.Net、Java、Python、Ruby和JavaScript等。<br>如果你想阅读更多，Elasticsearch <a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">官方网站</a> 可能是最好的地方。</p>
+<h2 id="Docker是在本地运行的最简方式"><a href="#Docker是在本地运行的最简方式" class="headerlink" title="Docker是在本地运行的最简方式"></a>Docker是在本地运行的最简方式</h2><p>在这篇文章中，我们需要先连接到一个 Elasticsearch （和后面的Kibana）的服务器。如果您已经有一个在本地运行或可以使用的服务器，那很好。否则需要先搭建一个服务器。<br>您可以选择在您的本地机器或可以使用的 VM 或服务器中下载和安装 Elasticsearch 和 Kibana 。不过，建议您使用最简单最纯粹的方式，使用Docker 搭建 Elasticsearch 和 Kibana 。<br>您可以直接运行以下命令，获取包含Elasticsearch和Kibana的容器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --rm -p 9200:9200 -p 5601:5601 --name esk nshou&#x2F;</span><br></pre></td></tr></table></figure>
+<p>elasticsearch-kibana</p>
+<ul>
+<li>-it 表示以交互模式启动容器，并附加到终端。</li>
+<li>–rm 表示从终端退出后，容器将被移除。</li>
+<li>-p 将容器中的端口映射到主机中的端口</li>
+<li>–name 给容器一个名称，当您不使用的情况下可以用 –rm 手动停止/删除</li>
+<li>nshou/elasticsearch-kibana 是 Docker Hub中的一个镜像的名称，已经有人帮你准备好了Elasticsearch和Kibana</li>
+<li>如果你喜欢在后台运行的话，你可以使用参数-d 代替 –it –rm，并且手动停止/删除容器。</li>
+</ul>
+<p>在同一个容器中运行多个应用程序，就像我们现在这种做法，非常适用本文，但不是推荐用于生产容器！</p>
+<p>您应该意识到，一旦你删除容器，你的数据就会消失（一旦你使用-rm选项就删除它了）。虽然有利于本地实验，但在实际环境中，如果您不想丢失数据，请参照 “data container” 模式。</p>
+<p>Docker是一个很棒的工具，我鼓励你更多地了解它，特别是如果你想做更重要的事情，而不仅仅是跟随本文，在本地快速搭建 Elasticsearch 服务器。在之前的文章 <a target="_blank" rel="noopener" href="http://www.dotnetcurry.com/windows-azure/1339/docknetfiddle-using-docker-dotnet-core">Building DockNetFiddle using Docker and .NET Core</a> 中已经对 .NET Core 搭配 Docker 有很好的介绍。</p>
+<p>只需打开 <a target="_blank" rel="noopener" href="http://localhost:9200/">http://localhost:9200</a> 和 <a target="_blank" rel="noopener" href="http://localhost:5600/">http://localhost:5600</a> ，检查Elasticsearch 和 Kibana 是否都可以使用。（如果您使用docker toolbox，请使用托管Docker的虚拟机ip替换localhost，您可以在命令行中运行 docker-machine env default ）。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-2772c2b47eae7efc.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-2772c2b47eae7efc.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>在docker中运行 Elasticsearch</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-650a133ce6a45c0b.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-650a133ce6a45c0b.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>kibana也准备好了</p>
+<h2 id="在-Elasticsearch-中索引和查询"><a href="#在-Elasticsearch-中索引和查询" class="headerlink" title="在 Elasticsearch 中索引和查询"></a>在 Elasticsearch 中索引和查询</h2><p>在我们开始编写任何 .Net 代码之前，我们先了解一下一些基本知识。先在 Elasticsearch 索引一些文档（类似于存到数据库），以便我们对它们运行不同的查询。</p>
+<p>在这里，我将使用Postman向我们的 Elasticsearch 服务器发送 HTTP 请求，但您可以使用任何其他类似的工具，如 Fiddler或 curl 。</p>
+<p>我们要做的第一件事是请求 Elasticsearch 创建一个新的索引 (译者语:类似创建一个表) 并索引一些文档 (译者语:类似于在数据中插入数据) 。这类似于将数据存储在表/集合中，主要区别（和目的）是让 Elasticsearch 集群 （这里只是一个节点） 可以分析和搜索文档数据。<br>被索引的文档在 Elasticsearch 中以索引和类型进行组织。以往，被拿来和数据库表做对比，往往会令人困惑。如这篇文章所述，索引由Lucene处理，在分布式跨 分片 中，与类型紧密地联系在一起。<br>发送以下两个请求以创建索引，并在该索引中插入文档 (请记住 toolbox，如果使用docker ，请使用托管Docker的虚拟机ip而不是localhost) :</p>
+<ul>
+<li>创建一个名为 “default” 的新索引</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT localhost:9200&#x2F;default</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 “default” 索引中索引文档。请注意，我们需要知道我们存储哪种类型的文档（”product”）和该文档的ID (如 1，尽管您可以使用任何值，只要它是唯一的)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PUT localhost:9200&#x2F;default&#x2F;product&#x2F;1</span><br><span class="line">&#123; </span><br><span class="line">    &quot;name&quot;: &quot;Apple MacBook Pro&quot;,</span><br><span class="line">    &quot;description&quot;: &quot;Latest MacBook Pro 13&quot;,</span><br><span class="line">    &quot;tags&quot;: [&quot;laptops&quot;, &quot;mac&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-2a1fbdf480930098.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-2a1fbdf480930098.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>创建一个新索引</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-7be2a844f2221e08.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-7be2a844f2221e08.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>索引新文档</p>
+<p>在我们验证搜索功能和查询数据之前，再索引几个 “product”。尝试使用不同的 “tags”，如 “laptops”和 “laptops”，并记得使用不同的ids！<br>完成后，让我们按名称排序的搜索所有被索引的文档。您可以使用查询字符串或 GET/POST 同样的内容，下面两个请求是等效的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET http:&#x2F;&#x2F;localhost:9200&#x2F;default&#x2F;_search?q&#x3D;*&amp;sort&#x3D;name.keyword:asc</span><br><span class="line">POST http:&#x2F;&#x2F;localhost:9200&#x2F;default&#x2F;_search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123; &quot;match_all&quot;: &#123;&#125; &#125;,</span><br><span class="line">  &quot;sort&quot;: [</span><br><span class="line">    &#123; &quot;name.keyword&quot;: &quot;asc&quot; &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>让我们尝试一些更有趣的东西，例如搜索 “description” 字段中含有 “latest” ，同时 “tags” 字段中含有 “laptops” 的所有文档：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST http:&#x2F;&#x2F;localhost:9200&#x2F;default&#x2F;_search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123; </span><br><span class="line">      &quot;bool&quot;: &#123;</span><br><span class="line">      &quot;must&quot;: [</span><br><span class="line">        &#123; &quot;match&quot;: &#123;&quot;description&quot;: &quot;latest&quot;&#125; &#125;,</span><br><span class="line">        &#123; &quot;match&quot;: &#123; &quot;tags&quot;: &quot;laptops&quot; &#125; &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;sort&quot;: [</span><br><span class="line">    &#123; &quot;name.keyword&quot;: &quot;asc&quot; &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-a5c1ede5cbdf11f2.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-a5c1ede5cbdf11f2.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>搜索结果</p>
+<h2 id="Kibana-可视化数据"><a href="#Kibana-可视化数据" class="headerlink" title="Kibana 可视化数据"></a>Kibana 可视化数据</h2><p>作为介绍的最后部分，我们将对 Kibana 的相关知识蜻蜓点水。<br>假设您在上一步已经索引了几个文档，通过访问 <a target="_blank" rel="noopener" href="http://localhost:5601/">http://localhost:5601</a> 中打开在 Docker 的 Kibana 服务器。你会注意到，Kibana 要求你提供默认的索引模式，所以必须告诉它使用的 Elasticsearch 索引：</p>
+<p>我们在上一节中创建了一个名为 “default” 的索引，因此可以使用 “default” 作为索引模式。<br>您还需要取消 “索引包含基于时间的事件 (Index contains time-based events ) “ 选项，因为我们的文档不包含任何时间字段。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-73e3134d092354c4.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-73e3134d092354c4.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>在 Kibana 中添加索引模式</p>
+<p>完成后，使用左侧菜单打开 “ 发现 (Discover) “ 页面，您应该会看到上一节中插入的所有最新文档。尝试选择不同的字段，在搜索栏中输入相关的字段或某个过滤器：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-b883306693b21bf2.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-b883306693b21bf2.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>在 kibana 中可视化数据</p>
+<p>最后，我们创建一个饼图，显示 “laptops” 或 “desktops” 的销量百分比。利用之前索引的数据，在左侧菜单新建一个 “饼图 (Pie Chart)” 。<br>您可以在 饼图 (Pie Chart)的页面上配置。将 “ Count “ 作为切片的大小，并在 “ buckets “ 部分中选择 “ split slices “ 。将 “ filters “ 作为聚合类型，添加两个过滤器：tags =”laptop” 和 tags =”desktoptops” 。单击运行，您将看到类似于下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-72e5206c294adb26.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-72e5206c294adb26.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>在Kibana中创建饼图</p>
+<p>确保在搜索栏中输入包含已过滤的项目的搜索关键词，并注意到可视化图形如何变化。</p>
+<h2 id="Elasticsearch-Net-API"><a href="#Elasticsearch-Net-API" class="headerlink" title="Elasticsearch .Net API"></a>Elasticsearch .Net API</h2><p>在简要介绍Elasticsearch和Kibana之后，我们来看看我们如何用 .Net 应用程序索引和查询我们的文档。<br>您可能想知道为什么要这样做，而不是直接使用 HTTP API 。我可以提供几个理由，我相信你可以自己找几个：</p>
+<ul>
+<li><p>你不想直接暴露 Elasticsearch 集群</p>
+</li>
+<li><p>Elasticsearch 可能不是您的主数据库，您可能需要结合来自主数据库的结果。</p>
+</li>
+<li><p>你希望包含来自存储/生产服务器中的被索引文档<br>首先需要注意的是打开 这个文档 ,有两个官方提供的 APIs : Elasticsearch.Net 和 NEST ，都支持 .Net Core 项目。</p>
+</li>
+<li><p>Elasticsearch.Net 提供了一个用于与 Elasticsearch连接的低级API，提供构建/处理请求和响应的功能。它是 .Net 瘦客户端。</p>
+</li>
+<li><p>NEST 在 Elasticsearch.Net 之上，提供了更高级别的 API 。它可以将对象映射到请求/响应中，提供强大查询功能，将索引名称、文档类型、字段类型用于构建与 HTTP REST API 的匹配查询。</p>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-0e885efa9cf839fd.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-0e885efa9cf839fd.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>Elasticsearch .Net API</p>
+<p>由于我使用的是 NEST，所以第一步是创建一个新的 ASP .Net Core 应用程序，并使用 Package Manager 安装NEST。</p>
+<h2 id="使用Nest开始索引数据"><a href="#使用Nest开始索引数据" class="headerlink" title="使用Nest开始索引数据"></a>使用Nest开始索引数据</h2><p>我们将在新的 ASP.Net Core 应用程序中完成之前手动发送 HTTP 请求的一些步骤。如果需要，请重新启Docker 容器，从而清理数据；或通过 HTTP API 和 Postman 手动删除文档/索引。<br>我们首先为产品创建一个POCO模型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Product</span><br><span class="line">&#123;</span><br><span class="line">    public Guid Id &#123; get; set; &#125;</span><br><span class="line">    public string Name &#123; get; set; &#125;</span><br><span class="line">    public string Description &#123; get; set; &#125;</span><br><span class="line">    public string[] Tags &#123; get; set; &#125;        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们创建一个新的控制器 ProductController，它具有添加新的 “Product” 的方法和基于单个关键词查找 “Product” 的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class ProductController : Controller</span><br><span class="line"> &#123;</span><br><span class="line"></span><br><span class="line">    [HttpPost]</span><br><span class="line">    public async Task&lt; IActionResult &gt; Create([FromBody]Product product)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    [HttpGet(&quot;find&quot;)]</span><br><span class="line">    public async Task&lt; IActionResult &gt; Find(string term)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure>
+
+<p>为了实现这些方法，我们需要先连接到 Elasticsearch。这里有一个 ElasticClient 连接的正确示范。 由于该类是线程安全的，所以推荐的方法是在应用程序中使用单例模式，而不是按请求创建新的连接。</p>
+<p>为了简洁起见，我现在将使用带有硬编码设置的私有静态变量。在 .Net Core 中使用依赖注入配置框架，或查看 Github中 的代码。</p>
+<p>可以想到的是，至少需要提供被连接的 Elasticsearch 集群的URL。当然，还有其他可选参数，用于与您的群集进行身份验证、设置超时、连接池等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> private static readonly ConnectionSettings connSettings &#x3D;</span><br><span class="line">    new ConnectionSettings(new Uri(&quot;http:&#x2F;&#x2F;localhost:9200&#x2F;&quot;));        </span><br><span class="line">private static readonly ElasticClient elasticClient &#x3D; </span><br><span class="line">    new ElasticClient(connSettings);</span><br></pre></td></tr></table></figure>
+
+
+<p>建立连接后，索引文档只是简单地使用 ElasticClient 的Index/IndexAsync 方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[Route(&quot;api&#x2F;[controller]&quot;)]</span><br><span class="line">public class ProductController : Controller</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    [HttpPost]</span><br><span class="line">    public async Task&lt;IActionResult&gt; Create([FromBody]Product product)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    [HttpGet(&quot;find&quot;)]</span><br><span class="line">    public async Task&lt;IActionResult&gt; Find(string term)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很简单，对吧？不幸的是，如果您向Postman发送以下请求，您将看到失败。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST http:&#x2F;&#x2F;localhost:65113&#x2F;api&#x2F;product</span><br><span class="line">&#123; </span><br><span class="line">    &quot;name&quot;: &quot;Dell XPS 13&quot;,</span><br><span class="line">    &quot;description&quot;: &quot;Latest Dell XPS 13&quot;,</span><br><span class="line">    &quot;tags&quot;: [&quot;laptops&quot;, &quot;windows&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是因为NEST无法确定在索引文档时使用哪个索引！如果您想起手动使用 HTTP API 的做法，那么需要在URL指出文档的索引、文档的类型和ID，如 localhost:9200/default/product/1</p>
+<p>NEST能够推断文档的类型（使用类的名称），还可以默认对字段进行索引（基于字段的类型），但需要一些索引名称的帮助。您可以指定默认的索引名称，以及特定类型的特定索引名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">connSettings &#x3D; new ConnectionSettings(new Uri(&quot;http:&#x2F;&#x2F;192.168.99.100:9200&#x2F;&quot;))</span><br><span class="line">    .DefaultIndex(&quot;default&quot;)</span><br><span class="line">    &#x2F;&#x2F;Optionally override the default index for specific types</span><br><span class="line">    .MapDefaultTypeIndices(m &#x3D;&gt; m</span><br><span class="line">        .Add(typeof(Product), &quot;default&quot;));</span><br></pre></td></tr></table></figure>
+
+<p>进行这些更改后再试一次。您将看到 NEST 创建索引(如果尚未存在)，并将文档编入索引。如果你切换到 Kibana，你也可以看到该文档。需要注意的是:</p>
+<p>从类的名称推断文档类型，如 Product<br>在类中将Id属性推断为标识<br>将所有公开的属性发送到 Elasticsearch</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-eb3b54a03d3e1984.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-eb3b54a03d3e1984.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>使用NEST索引的文档</p>
+<p>在我们查询数据之前，重新考虑创建索引的方式。<br>如何创建索引?<br>现在我们得到一个事实，即如果这个索引不存在，也会被创建。然而映射字段的索引方式很重要，并直接定义了 Elasticsearch 如何索引和分析这些字段。这对于字符串字段尤其明显，因为在 Elasticsearch v5 中提供了两种不同字段类型的 “Text” 和 “Keyword”：</p>
+<ul>
+<li>Text 类型的字段将会被分析和分解成单词，以便用于更高级的 Elasticsearch 搜索功能</li>
+<li>另一方面，Keyword 字段将 “保持原样” 而不进行分析，只能通过其精确值进行搜索。<br>您可以使用 NEST 索引映射属性来生成POCO模型：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Product</span><br><span class="line">&#123;</span><br><span class="line">    public Guid Id &#123; get; set; &#125;</span><br><span class="line">    [Text(Name&#x3D;&quot;name&quot;)]</span><br><span class="line">    public string Name &#123; get; set; &#125;</span><br><span class="line">    [Text(Name &#x3D; &quot;description&quot;)]</span><br><span class="line">    public string Description &#123; get; set; &#125;</span><br><span class="line">    [Keyword(Name &#x3D; &quot;tag&quot;)]</span><br><span class="line">    public string[] Tags &#123; get; set; &#125;        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>然而，我们需要先创建索引，必须使用 ElasticClient API 手动创建和定义索引的映射。这是非常简单的，特别是如果我们只是使用属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (!elasticClient.IndexExists(&quot;default&quot;).Exists)</span><br><span class="line">    &#123;</span><br><span class="line">        elasticClient.CreateIndex(&quot;default&quot;, i &#x3D;&gt; i</span><br><span class="line">            .Mappings(m &#x3D;&gt; m</span><br><span class="line">                .Map&lt;Product&gt;(ms &#x3D;&gt; ms.AutoMap())));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接向Elasticsearch发送请求(GET localhost:92000/default)，并注意与我们想要的映射是否相同。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-a7931944133e0038.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-a7931944133e0038.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图"></p>
+<p>使用NEST创建索引映射</p>
+<h2 id="使用Nest查询数据"><a href="#使用Nest查询数据" class="headerlink" title="使用Nest查询数据"></a>使用Nest查询数据</h2><p>现在，我们有一个使用 NEST 对 “products” 进行索引的 ProductController 控制器。是时候，为这个控制器添加 Find action，用于使用 NEST 向 Elasticsearch 查询文档。<br>我们只是用到一个字段来实现一个简单的搜索。您应该观察所有字段:</p>
+<ul>
+<li>映射为 “Text” 类型的字段可以被分析，您可以在 “name” / “description” 字段内搜索特定的单词</li>
+<li>映射为 “Keywords” 的字段是保持原样的，未进行分析。您只能在 “tags” 字段中完全匹配。</li>
+</ul>
+<p>NEST 提供了一个查询 Elasticsearch 的丰富 API，可以转换成标准的 HTTP API 。实现上述查询类型与使用Search/SearchAsync方法一样简单，并构建一个 SimpleQueryString 作为参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[HttpGet(&quot;find&quot;)]</span><br><span class="line">public async Task&lt;IActionResult&gt; Find(string term)</span><br><span class="line">&#123;</span><br><span class="line">    var res &#x3D; await elasticClient.SearchAsync&lt;Product&gt;(x &#x3D;&gt; x</span><br><span class="line">        .Query( q &#x3D;&gt; q.</span><br><span class="line">            SimpleQueryString(qs &#x3D;&gt; qs.Query(term))));</span><br><span class="line">    if (!res.IsValid)</span><br><span class="line">    &#123;</span><br><span class="line">        throw new InvalidOperationException(res.DebugInformation);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return Json(res.Documents);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用PostMan测试您的新操作：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-df9770b8201e370e.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-df9770b8201e370e.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图片"></p>
+<p>使用nest查询</p>
+<p>正如您可能已经意识到的那样，我们的操作行为与手动发送请求到 Elasticsearch 一样：</p>
+<blockquote>
+<p>GET <a target="_blank" rel="noopener" href="http://localhost:9200/default/_search?q=*&amp;">http://localhost:9200/default/_search?q=*&amp;</a></p>
+</blockquote>
+<h2 id="在-Net-Core-中创建一个Elasticsearch日志提供程序"><a href="#在-Net-Core-中创建一个Elasticsearch日志提供程序" class="headerlink" title="在 .Net Core 中创建一个Elasticsearch日志提供程序"></a>在 .Net Core 中创建一个Elasticsearch日志提供程序</h2><p>现在我们了解了 NEST 的一些基础知识，让我们尝试一些更有野心的事情。我们已经创建了一个 ASP.Net Core 的应用程序，借助.NET Core的日志框架，实现我们的日志提供程序，并将信息发送到Elasticsearch。<br>新的日志 API 在日志 (logger) 和日志提供程序 (logger provider) 方面的区别：</p>
+<ul>
+<li>日志 (logger) 记录信息和事件，如用于控制器中</li>
+<li>可以为应用程序添加并启用多个日志提供程序 (provider) ，并可以配置独立的记录级别和记录相应的信息/事件。</li>
+</ul>
+<p>该日志框架内置了一些对事件日志、Azure 等的日志提供程序 (provider)，但正如您将看到的，创建自己的并不复杂。有关详细信息，请查阅.NET Core 关于日志的<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging">官方文档</a>。</p>
+<p>在本文的最后部分，我们将为Elasticsearch创建一个新的日志提供程序，在我们的应用程序中启用它，并使用Kibana来查看记录的事件。</p>
+<h2 id="为Elasticsearch添加一个新的日志提供程序"><a href="#为Elasticsearch添加一个新的日志提供程序" class="headerlink" title="为Elasticsearch添加一个新的日志提供程序"></a>为Elasticsearch添加一个新的日志提供程序</h2><p>首先要做的是定义一个新的POCO对象，我们将使用它作为使用NEST进行索引的文档，类似于之前创建的 “Product” 类。<br>这将包含有关可能发生的任何异常以及相关请求数据的记录信息、可选信息。记录请求数据将会派上用场，因为我们可以根据具体请求查询/可视化我们记录的事件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class LogEntry</span><br><span class="line">&#123;</span><br><span class="line">    public DateTime DateTime &#123; get; set; &#125;</span><br><span class="line">    public EventId EventId &#123; get; set; &#125;</span><br><span class="line">    [Keyword]</span><br><span class="line">    [JsonConverter(typeof(StringEnumConverter))]</span><br><span class="line">    public Microsoft.Extensions.Logging.LogLevel Level &#123; get; set; &#125;</span><br><span class="line">    [Keyword]</span><br><span class="line">    public string Category &#123; get; set; &#125;</span><br><span class="line">    public string Message &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">    [Keyword]</span><br><span class="line">    public string TraceIdentifier &#123; get; set; &#125;</span><br><span class="line">    [Keyword]</span><br><span class="line">    public string UserName &#123; get; set; &#125;        </span><br><span class="line">    [Keyword]</span><br><span class="line">    public string ContentType &#123; get; set; &#125;</span><br><span class="line">    [Keyword]</span><br><span class="line">    public string Host &#123; get; set; &#125;         </span><br><span class="line">    [Keyword]</span><br><span class="line">    public string Method &#123; get; set; &#125;        </span><br><span class="line">    [Keyword]</span><br><span class="line">    public string Protocol &#123; get; set; &#125;</span><br><span class="line">    [Keyword]</span><br><span class="line">    public string Scheme &#123; get; set; &#125;</span><br><span class="line">    public string Path &#123; get; set; &#125;</span><br><span class="line">    public string PathBase &#123; get; set; &#125;</span><br><span class="line">    public string QueryString &#123; get; set; &#125;</span><br><span class="line">    public long? ContentLength &#123; get; set; &#125;</span><br><span class="line">    public bool IsHttps &#123; get; set; &#125;</span><br><span class="line">    public IRequestCookieCollection Cookies &#123; get; set; &#125;</span><br><span class="line">    public IHeaderDictionary Headers &#123; get; set; &#125;</span><br><span class="line"></span><br><span class="line">    [Keyword]</span><br><span class="line">    public string ExceptionType &#123; get; set; &#125;        </span><br><span class="line">    public string ExceptionMessage &#123; get; set; &#125;</span><br><span class="line">    public string Exception &#123; get; set; &#125;</span><br><span class="line">    public bool HasException &#123; get &#123; return Exception !&#x3D; null; &#125; &#125;</span><br><span class="line">    public string StackTrace &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下一步是在一个新类上实现ILogger接口。如您所想，这将需要记录的数据映射到一个新的 LogEntry 对象，并使用 ElasticClient 对其进行索引。</p>
+<ul>
+<li>我们将使用IHttpContextAccessor，以便我们可以获取当前的HttpContext并提取相关的请求属性。</li>
+</ul>
+<p>在这里就不写连接到Elasticsearch并创建索引的代码，这与之前的操作，没有什么不同。使用不同的索引或删除上一节中索引的 “products” 。</p>
+<p>注意： 您可以使用依赖注入和配置文检查 <a target="_blank" rel="noopener" href="https://github.com/DaniJG/ELKLogging">Github</a> 中 的配套代码。</p>
+<p>实现的主要方法是Log <TState>，这是我们创建一个LogEntry并用NEST进行索引：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">public void Log&lt; TState &gt;(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func&lt; TState, Exception, string &gt; formatter)</span><br><span class="line">&#123;</span><br><span class="line">    if (!IsEnabled(logLevel)) return;</span><br><span class="line"></span><br><span class="line">    var message &#x3D; formatter(state, exception);</span><br><span class="line">    var entry &#x3D; new LogEntry</span><br><span class="line">    &#123;</span><br><span class="line">        EventId &#x3D; eventId,</span><br><span class="line">        DateTime &#x3D; DateTime.UtcNow,</span><br><span class="line">        Category &#x3D; _categoryName,</span><br><span class="line">        Message &#x3D; message,</span><br><span class="line">        Level &#x3D; logLevel</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    var context &#x3D; _httpContextAccessor.HttpContext;</span><br><span class="line">    if (context !&#x3D; null)</span><br><span class="line">    &#123;                </span><br><span class="line">        entry.TraceIdentifier &#x3D; context.TraceIdentifier;</span><br><span class="line">        entry.UserName &#x3D; context.User.Identity.Name;</span><br><span class="line">        var request &#x3D; context.Request;</span><br><span class="line">        entry.ContentLength &#x3D; request.ContentLength;</span><br><span class="line">        entry.ContentType &#x3D; request.ContentType;</span><br><span class="line">        entry.Host &#x3D; request.Host.Value;</span><br><span class="line">        entry.IsHttps &#x3D; request.IsHttps;</span><br><span class="line">        entry.Method &#x3D; request.Method;</span><br><span class="line">        entry.Path &#x3D; request.Path;</span><br><span class="line">        entry.PathBase &#x3D; request.PathBase;</span><br><span class="line">        entry.Protocol &#x3D; request.Protocol;</span><br><span class="line">        entry.QueryString &#x3D; request.QueryString.Value;</span><br><span class="line">        entry.Scheme &#x3D; request.Scheme;</span><br><span class="line"></span><br><span class="line">        entry.Cookies &#x3D; request.Cookies;</span><br><span class="line">        entry.Headers &#x3D; request.Headers;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (exception !&#x3D; null)</span><br><span class="line">    &#123;</span><br><span class="line">        entry.Exception &#x3D; exception.ToString();</span><br><span class="line">        entry.ExceptionMessage &#x3D; exception.Message;</span><br><span class="line">        entry.ExceptionType &#x3D; exception.GetType().Name;</span><br><span class="line">        entry.StackTrace &#x3D; exception.StackTrace;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    elasticClient.Client.Index(entry);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>您还需要额外实现 BeginScope 和 IsEnabled 方法。</p>
+<ul>
+<li>为了本文的目的，忽略 BeginScope，只返回null。</li>
+<li>更新您的构造函数，以便它接收一个日志级别(LogLevel)，如果接收到大于或等于构造函数中的日志级别，则实现 IsEnabled 并返回 true。</li>
+</ul>
+<p>你可能会问为什么需要分类？这是一个用于标识日志是哪种类型的字符串。默认情况下，每次注入ILogger <T>的实例时，该类别默认分配为T的分类名称。例如，获取ILogger <MyController>并使用它来记录某些事件，意味着这些事件将具有 “MyController “ 名称。<br>这可能派上用场，例如为不同的类设置不同的日志级别，以过滤/查询记录的事件。我相信您可能还想到更多的用法。</p>
+<p>这个类的实现将如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class ESLoggerProvider: ILoggerProvider</span><br><span class="line">&#123;</span><br><span class="line">    private readonly IHttpContextAccessor _httpContextAccessor;</span><br><span class="line">    private readonly FilterLoggerSettings _filter;</span><br><span class="line"></span><br><span class="line">    public ESLoggerProvider(IServiceProvider serviceProvider, FilterLoggerSettings filter &#x3D; null)</span><br><span class="line">    &#123;</span><br><span class="line">        _httpContextAccessor &#x3D; serviceProvider.GetService&lt;IHttpContextAccessor&gt;();</span><br><span class="line">        _filter &#x3D; filter ?? new FilterLoggerSettings</span><br><span class="line">        &#123;</span><br><span class="line">            &#123;&quot;*&quot;, LogLevel.Warning&#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public ILogger CreateLogger(string categoryName)</span><br><span class="line">    &#123;</span><br><span class="line">        return new ESLogger(_httpContextAccessor, categoryName, FindLevel(categoryName));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private LogLevel FindLevel(string categoryName)</span><br><span class="line">    &#123;</span><br><span class="line">        var def &#x3D; LogLevel.Warning;</span><br><span class="line">        foreach (var s in _filter.Switches)</span><br><span class="line">        &#123;</span><br><span class="line">            if (categoryName.Contains(s.Key))</span><br><span class="line">                return s.Value;</span><br><span class="line"></span><br><span class="line">            if (s.Key &#x3D;&#x3D; &quot;*&quot;)</span><br><span class="line">                def &#x3D; s.Value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return def;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void Dispose()</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后，我们创建一个扩展方法，可以用于在启动类中注册我们的日志提供程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static class LoggerExtensions</span><br><span class="line">&#123;</span><br><span class="line">    public static ILoggerFactory AddESLogger(this ILoggerFactory factory, IServiceProvider serviceProvider, FilterLoggerSettings filter &#x3D; null)</span><br><span class="line">    &#123;</span><br><span class="line">        factory.AddProvider(new ESLoggerProvider(serviceProvider, filter));</span><br><span class="line">        return factory;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)</span><br><span class="line">&#123;</span><br><span class="line">    loggerFactory.AddConsole(Configuration.GetSection(&quot;Logging&quot;))</span><br><span class="line">        .AddDebug()</span><br><span class="line">        .AddESLogger(app.ApplicationServices, new FilterLoggerSettings</span><br><span class="line">        &#123;</span><br><span class="line">            &#123;&quot;*&quot;, LogLevel.Information&#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    …</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意我如何覆盖默认设置并按日志级别分类记录。这样，我们可以轻松地为每个请求索引一些事件。</p>
+<h2 id="在Kibana中可视化数据"><a href="#在Kibana中可视化数据" class="headerlink" title="在Kibana中可视化数据"></a>在Kibana中可视化数据</h2><p>现在我们已经在Kibana中记录了事件，我们来探索数据可视化吧！<br>首先，在Kibana中重建索引，这次确保选择” Index contains time-based events ( Index包含基于时间的事件 )”，选择字段dateTime作为”Time-field name (时间字段名称)”。<br>接下来，启动您的应用程序，浏览一些页面以获取一些事件日志。还可以在某个端点随意添加抛出异常的代码，以便我们可以看到被记录的异常数据。<br>在这之后，请转到Kibana的 发现 (Discover) 页面，您可以看到由 “dateTime” 字段排序的多个事件（默认情况下，数据被过滤为最近15分钟，但您可以在右上角更改）：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-45313bcc0447d16d.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-45313bcc0447d16d.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图片"></p>
+<p>Kibana可视化中记录的事件</p>
+<p>试着在搜索栏中输入 “exception”，并注意任何一个被分析的文本字段中包含 “exception” 的事件。然后尝试搜索特定的异常类型（记住我们使用了一个关键字字段！）。<br>您还可以尝试搜索特定的URL，如以 “ /Home/About “和” /Home/About” 路径的两种搜索方式 。您会注意到第一种情况包括引用者是 “/Home/About” 的事件，而第二种情况则只能正确返回路径为 “/Home/About” 的事件。<br>一旦你熟悉了数据，以及如何查询数据，那么可以用数据创建一些有趣的图形。<br>首先，我们将创建一个图表，显示每分钟记录的异常数。</p>
+<ul>
+<li>转到Kibana的 可视化 (Visualize) 页面，并创建一个新的 垂直条形图 (Vertical bar chart) 。</li>
+<li>选择Y轴作为计数，X轴上为日期的直方图。</li>
+<li>将间隔设置为每分钟，最后在搜索框中添加一个过滤器 “hasException：true” 。<br>一个很棒的图表，显示每分钟记录的异常数目：</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-5ac86df0916ffd04.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-5ac86df0916ffd04.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图片"></p>
+<p>每分钟记录的异常数目</p>
+<p>接下来，显示每个 category 随时间记录的消息数量，限于前5个 category ：</p>
+<ul>
+<li>转到Kibana的 可视化 (Visualize) 页面，并创建一个新的 线型图 (Line chart) 。</li>
+<li>再次选择Y轴作为计数，X轴上为日期的直方图，选择dateTime作为字段，间隔为每分钟。</li>
+<li>现在添加一个 sub-bucket 并选择 “split lines” 。使用 “significant terms” 作为聚合，category 为字段，单位为5个。<br>这将绘制类似于以下的图表：</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-a1e942d8d23d2cfa.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-a1e942d8d23d2cfa.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图片"></p>
+<p>随着时间的推移</p>
+<p>尝试在搜索框中添加一些过滤器，并查看它对结果的影响。<br>最后，我们添加另一个图表，我们将看到前五个出现最多的消息和前五个 categories 的消息。</p>
+<ul>
+<li>转到Kibana的 可视化 (Visualize) 页面，并创建一个新的 饼图 (Pie chart) 。</li>
+<li>像之前一样，选择Y轴的计数</li>
+<li>现在，将 “Terms” 作为聚合，将 “category” 作为字段，数量作为单位，限制前五个，画出图表。</li>
+<li>然后将 “Terms” 作为聚合来分割切片，”message.keyword” 作为字段，数量作为单位，限制前五个。<br>一旦你有了这些设置，你会看到一个类似于这个图表：</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/3913171-7a7cc97167920430.png?imageMogr2/auto-orient/strip%7CimageView2/2" class="lazyload" data-srcset="https://upload-images.jianshu.io/upload_images/3913171-7a7cc97167920430.png?imageMogr2/auto-orient/strip%7CimageView2/2" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" alt="图片"></p>
+<p>每个 category 中最常见的消息</p>
+<p>花时间观察下数据(百分比，message/category 显示在图表元素上)。例如，您将观察到由<br>DeveloperExceptionPageMiddleware类记录的异常。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Elasticsearch是一个强大的数据索引和查询平台。虽然它本身相当令人印象深刻，但与其他应用程序（如Kibana）相结合，可以很好地分析、报告和可视化数据。只要您开始使用，只是蜻蜓点水都能的到非凡的结果。<br>对于 .Net 和 .Net Core，Elasticsearch 官方的 API 已经覆盖，因为它们支持 .Net Standard 1.3和更高版本（他们仍然在为1.1提供支持）。<br>正如我们已经看到的，在 ASP.Net Core 项目中使用这个 API 是很方便的，我们可以轻松地将其 REST API 作为存储，以及在应用程序中作为日志提供程序。<br>最后但并非不重要的一点，我希望您使用<a target="_blank" rel="noopener" href="http://www.dotnetcurry.com/windows-azure/1339/docknetfiddle-using-docker-dotnet-core">Docker</a>。尝试使用 Elasticsearch，同时思考Docker可以为您和您的团队做些什么。</p>
+<p><a target="_blank" rel="noopener" href="http://bit.ly/dncm29-elklogging">下载本文的全部源代码</a>(Github)。</p>
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+          </blockquote>
+        </div>
+      
+      
+        <div class='donate'>
+          <div class='imgs'>
+            
+          </div>
+        </div>
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-10T20:42:25+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2021年3月10日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/elasticsearch/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>elasticsearch</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/docker/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>docker</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Kibana/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>Kibana</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+      
+        <a class='next' href='/2021/03/07/%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/'>
+          <p class='title'>标签插件的使用<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>
+
+text这是一些文本样式标签：
+带 下划线 的文本
+带 着重号 的文本
+带 波浪线 的文本
+带 删除线 的文本
+键盘样式的文本 command + D
+密码样式的文本：这里没有验证码
+spa...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Elasticsearch-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Elasticsearch - 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker%E6%98%AF%E5%9C%A8%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%80%E7%AE%80%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">Docker是在本地运行的最简方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-Elasticsearch-%E4%B8%AD%E7%B4%A2%E5%BC%95%E5%92%8C%E6%9F%A5%E8%AF%A2"><span class="toc-number">3.</span> <span class="toc-text">在 Elasticsearch 中索引和查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kibana-%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE"><span class="toc-number">4.</span> <span class="toc-text">Kibana 可视化数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Elasticsearch-Net-API"><span class="toc-number">5.</span> <span class="toc-text">Elasticsearch .Net API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Nest%E5%BC%80%E5%A7%8B%E7%B4%A2%E5%BC%95%E6%95%B0%E6%8D%AE"><span class="toc-number">6.</span> <span class="toc-text">使用Nest开始索引数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Nest%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="toc-number">7.</span> <span class="toc-text">使用Nest查询数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-Net-Core-%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAElasticsearch%E6%97%A5%E5%BF%97%E6%8F%90%E4%BE%9B%E7%A8%8B%E5%BA%8F"><span class="toc-number">8.</span> <span class="toc-text">在 .Net Core 中创建一个Elasticsearch日志提供程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BAElasticsearch%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E6%97%A5%E5%BF%97%E6%8F%90%E4%BE%9B%E7%A8%8B%E5%BA%8F"><span class="toc-number">9.</span> <span class="toc-text">为Elasticsearch添加一个新的日志提供程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8Kibana%E4%B8%AD%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE"><span class="toc-number">10.</span> <span class="toc-text">在Kibana中可视化数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">11.</span> <span class="toc-text">结论</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="使用ElasticSearch，Kibana，ASP.NET Core和Docker可视化数据";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+  // header 这里无论是否开启pjax都需要
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+  
+    // cover
+    var cover_wrapper=document.querySelector('.cover-wrapper');
+    
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
+    
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='3175833810'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="mailto:745567906@qq.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://github.com/Cabbage-Leon"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=63035382"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2021-2021 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+  loadCSS("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/styles/solarized-light.min.css", window.volantis.loadcss);
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+  
+  
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+        var imgs=["https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/41F215B9-261F-48B4-80B5-4E86E165259E.jpeg"];
+        if ('true' == 'true') {
+          function shuffle(arr){
+            /*From countercurrent-time*/
+            var n = arr.length;
+            while(n--) {
+              var index = Math.floor(Math.random() * n);
+              var temp = arr[index];
+              arr[index] = arr[n];
+              arr[n] = temp;
+            }
+          }
+          shuffle(imgs);
+        }
+	  function Pjax_backstretch(){
+        
+          $('#cover-backstretch').backstretch(
+            imgs,
+          {
+            duration: "20000",
+            fade: "1500"
+          });
+        
+	  }
+	  loadScript("https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js",Pjax_backstretch)
+    </script>
+  
+
+
+
+  
+  
+
+  <div id="rightmenu-wrapper">
+    <ul class="list-v rightmenu" id="rightmenu-content">
+      <li class='option'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-text' onclick="document.execCommand('copy')"><i class='fa fa-copy fa-fw'></i>复制文本</a>
+        <hr id='hr-text'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-href'><i class='fa fa-link fa-fw'></i>复制链接</a>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-open-href'><i class='fa fa-external-link-square-alt fa-fw'></i>在新标签页打开</a>
+        <hr id='hr-href'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-src'><i class='fa fa-image fa-fw'></i>复制图片地址</a>
+        <hr id='hr-src'>
+      </li>
+      
+        <li class='navigation'>
+          <a class='nav icon-only fix-cursor-default' onclick='history.back()'><i class='fa fa-arrow-left fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' onclick='history.forward()'><i class='fa fa-arrow-right fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' onclick='window.location.reload()'><i class='fa fa-redo fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' href='/'><i class='fa fa-home fa-fw'></i></a>
+        </li>
+      
+      <hr>
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default ' 
+        
+        
+        
+          onclick="document.execCommand('print')"
+        
+        >
+        <i class='fa fa-print fa-fw'></i> 打印页面
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default toggle-mode-btn' 
+        
+        
+        
+        >
+        <i class='fas fa-moon fa-fw'></i> Dark mode
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          <li class='music name'>
+            <p class='nav music-title fix-cursor-default'></p>
+          </li>
+          <li class='music ctrl'>
+            <a class='nav icon-only backward fix-cursor-default' onclick='aplayerBackward()'><i class='fa fa-step-backward fa-fw'></i></a>
+            <a class='nav icon-only toggle fix-cursor-default' onclick='aplayerToggle()'><i class='fa fa-play fa-fw'></i></a>
+            <a class='nav icon-only forward fix-cursor-default' onclick='aplayerForward()'><i class='fa fa-step-forward fa-fw'></i></a>
+          </li>
+          <li class='music volume'>
+            <a class='nav volume'>
+              <div class="aplayer-volume-bar-wrap">
+                <div class="aplayer-volume-bar fix-cursor-pointer">
+                  <div class="aplayer-volume"></div>
+                  <i class='left fa fa-volume-off fa-fw'></i>
+                  <i class='right fa fa-volume-up fa-fw'></i>
+                </div>
+              </div>
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+  <script>
+    window.document.oncontextmenu = function (event) {
+      if (event.ctrlKey) return true;
+      if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true;
+      return popMenu(event);
+    };
+    document.addEventListener("click", function (event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      mymenu.style.display = "none";
+    });
+    function popMenu(event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      var menuContent = document.getElementById('rightmenu-content');
+      var screenWidth = document.documentElement.clientWidth || document.body.clientWidth;
+      var screenHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      mymenu.style.left = event.clientX + "px"; // 获取鼠标位置
+      mymenu.style.top = event.clientY + "px";
+      mymenu.style.display = 'block';
+      if (event.clientX * 2 > screenWidth) {
+        menuContent.classList.add('left');
+      } else {
+        menuContent.classList.remove('left');
+      }
+      if (event.clientY * 2 > screenHeight) {
+        menuContent.classList.add('top');
+      } else {
+        menuContent.classList.remove('top');
+      }
+
+      let hrText = document.getElementById('hr-text');
+      let hrSrc = document.getElementById('hr-src');
+      let hrHref = document.getElementById('hr-href');
+
+      // 选中图片
+      let copySrc = document.getElementById('menu-copy-src');
+      if (copySrc != undefined) {
+        if (event.target.currentSrc) {
+          copySrc.style.display = 'block';
+          copySrc.addEventListener("click", function (e) {
+            copyString(event.target.currentSrc);
+          },{once: true});
+          hrSrc.style.display = 'block';
+        } else {
+          copySrc.style.display = 'none';
+          hrSrc.style.display = 'none';
+        }
+      }
+
+      // 选中按钮
+      // 判断是不是按钮
+      let href = '';
+      if (event.path) {
+        for (i = 0; i < event.path.length; i++) {
+          if (event.path[i].href != undefined && event.path[i].href.length > 0) {
+            href = event.path[i].href;
+          }
+        }
+      }
+
+      let copyText = document.getElementById('menu-copy-text');
+      copyText.style.display = 'none';
+      hrText.style.display = 'none';
+      if (href.length == 0) {
+        // 选中文本
+        if (window.getSelection().toString()) {
+          if ('' == 'true') {
+            copyText.style.display = 'block';
+            hrText.style.display = 'block';
+          }
+        }
+      }
+
+      // 在新标签页打开
+      let openHref = document.getElementById('menu-open-href');
+      if (openHref != undefined) {
+        if (href.length > 0) {
+          openHref.style.display = 'block';
+          openHref.addEventListener("click", function (e) {
+            window.open(href);
+          },{once: true});
+          hrHref.style.display = 'block';
+        } else {
+          openHref.style.display = 'none';
+          hrHref.style.display = 'none';
+        }
+      }
+      // 复制链接
+      let copyHref = document.getElementById('menu-copy-href');
+      if (copyHref != undefined) {
+        if (href.length > 0) {
+          copyHref.style.display = 'block';
+          copyHref.addEventListener("click", function (e) {
+            copyString(href);
+          },{once: true});
+        } else {
+          copyHref.style.display = 'none';
+        }
+      }
+      // 有音乐播放器 see: layout/_third-party/aplayer/script.ejs
+      
+      if(volantis.APlayerLoaded){ // APlayer加载完成？
+        // 如果有aplayer，初始化一下
+        checkAPlayer();
+      }
+      
+      return false; // 该行代码确保系统自带的右键菜单不会被调出
+    }
+    function hideMenu() {
+      document.getElementById('rightmenu-wrapper').style.display = 'none';
+    }
+    function copyString(str) {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      document.body.appendChild(input);
+      input.setAttribute('value', str);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    }
+    document.execCommand('click');
+  </script>
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '3175833810';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.APlayerLoaded=0 // APlayer加载完成状态
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return // APlayer加载完成？
+	  if ($("#safearea").css("display")!="block") return // 文章内容加载完成？ see: source/css/first.styl
+    clearInterval(checkAPlayer)
+	  if (!window.volantis.APlayerLoaded&&!window.MetingJSElement){ // APlayer只能加载一次
+      window.volantis.APlayerLoaded=1 // APlayer加载完成
+      loadScript("https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js") // 加载 MetingJS
+	  }
+  }, 2500) // 按照网速调节差分2.5s
+  // rightmenu see: layout/_partial/rightmenu.ejs
+
+  
+    loadScript("/js/aplayer.js")
+  
+
+</script>
+
+
+
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论啊~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '/';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":"/","placeholder":"快来评论啊~","appId":"0BeyVbHDkQX24Fe67Ramvgqj-gzGzoHsz","appKey":"Ar5VCkWBPCxn5iMCYsdm1e6h","meta":["nick"],"requiredFields":[],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false,"js":"https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+volantis.pjax.push(()=>{
+	document.querySelectorAll('pre code').forEach((block) => {
+	  hljs.highlightBlock(block);
+	});
+},"highlightjs")
+</script>
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://www.iwhero.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://www.iwhero.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://www.iwhero.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+var btn=$("#wrapper .toggle-mode-btn,#rightmenu-wrapper .toggle-mode-btn");
+function bindToggleButton() {
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	btn.unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>
