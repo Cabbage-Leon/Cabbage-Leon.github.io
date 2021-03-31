@@ -417,7 +417,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <div class='new-meta-item category'>
     <a class='notlink'>
       <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <a class="category-link" href="/categories/elasticsearch/">elasticsearch</a><span class="sep"></span><a class="category-link" href="/categories/elasticsearch/docker/">docker</a><span class="sep"></span><a class="category-link" href="/categories/elasticsearch/docker/Kibana/">Kibana</a>
+      <a class="category-link" href="/categories/docker/">docker</a><span class="sep"></span><a class="category-link" href="/categories/elasticsearch/">elasticsearch</a><span class="sep"></span><a class="category-link" href="/categories/kibana/">kibana</a><span class="sep"></span><a class="category-link" href="/categories/net/">net</a>
     </a>
   </div>
 
@@ -693,10 +693,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-10T20:42:25+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-18T17:18:30+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2021年3月10日</p>
+    <p>更新于：2021年3月18日</p>
   </a>
 </div>
 
@@ -741,6 +741,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/2021/03/17/Elasticsearch-Net-NEST-%E6%80%BB%E7%BB%93/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Elasticsearch .Net NEST 总结</p>
+          <p class='content'>
+
+基于Elasticsearch NEST 封装了一层仓储地址：https://github.com/Cabbage-Leon
+存储结构在Elasticsearch中，文档(Document)...</p>
+        </a>
       
       
         <a class='next' href='/2021/03/07/%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/'>
@@ -1301,7 +1309,7 @@ var loadCSS = function( href, before, media, attributes ){
       if (href.length == 0) {
         // 选中文本
         if (window.getSelection().toString()) {
-          if ('' == 'true') {
+          if ('true' == 'true') {
             copyText.style.display = 'block';
             hrText.style.display = 'block';
           }
@@ -1423,6 +1431,62 @@ var loadCSS = function( href, before, media, attributes ){
 
 
 
+
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+	volantis.pjax.push(pjax_initCopyCode)
+</script>
 
 
 

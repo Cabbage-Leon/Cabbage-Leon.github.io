@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <link rel="preload" href="/css/first.css" as="style">
+  
+
+  <!-- 页面元数据 -->
+  
+  <title>Elasticsearch .Net NEST 总结 - Learner</title>
+  
+    <meta name="keywords" content="elasticsearch,nest,net">
+  
+
+  
+
+  <!-- feed -->
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+
+  <!-- import link -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/first.css">
+
+  
+
+  
+  <link rel="stylesheet" href="/css/style.css" media="print" onload="this.media='all';this.onload=null">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  
+
+  <script id="loadcss"></script>
+
+  
+<script>
+if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMode))
+    document.write(
+	'<style>'+
+		'html{'+
+			'overflow-x: hidden !important;'+
+			'overflow-y: hidden !important;'+
+		'}'+
+		'.kill-ie{'+
+			'text-align:center;'+
+			'height: 100%;'+
+			'margin-top: 15%;'+
+			'margin-bottom: 5500%;'+
+		'}'+
+	'</style>'+
+    '<div class="kill-ie">'+
+        '<h1><b>抱歉，您的浏览器无法访问本站</b></h1>'+
+        '<h3>微软已经于2016年终止了对 Internet Explorer (IE) 10 及更早版本的支持，<br/>'+
+        '继续使用存在极大的安全隐患，请使用当代主流的浏览器进行访问。</h3><br/>'+
+        '<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/WindowsForBusiness/End-of-IE-support"><strong>了解详情 ></strong></a>'+
+    '</div>');
+</script>
+
+
+<noscript>
+	<style>
+		html{
+			overflow-x: hidden !important;
+			overflow-y: hidden !important;
+		}
+		.kill-noscript{
+			text-align:center;
+			height: 100%;
+			margin-top: 15%;
+			margin-bottom: 5500%;
+		}
+	</style>
+    <div class="kill-noscript">
+        <h1><b>抱歉，您的浏览器无法访问本站</b></h1>
+        <h3>本页面需要浏览器支持（启用）JavaScript</h3><br/>
+        <a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=启用JavaScript"><strong>了解详情 ></strong></a>
+    </div>
+</noscript>
+
+</head>
+
+  <body>
+    
+
+<header id="l_header" class="l_header auto shadow blur show" style='opacity: 0' >
+  <div class='container'>
+  <div id='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a id="s-comment" class="fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a id="s-toc" class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://avatars.githubusercontent.com/u/31495215?s=400&u=3186d834482e8e93158b1e650122ce151ba8dbb2&v=4'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="搜索" />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+    <div id="l_body">
+      <div id="l_cover">
+  
+    
+        <div id="full" class='cover-wrapper post dock' style="display: none;">
+          
+            <div id='cover-backstretch'></div>
+          
+          <div class='cover-body'>
+  <div class='top'>
+    
+    
+      <p class="title">不积跬步，无以至千里。</p>
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div id="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+        </div>
+    
+  
+  </div>
+
+      <div id="safearea">
+        <div class="body-wrapper" id="pjax-container">
+          
+
+<div class='l_main'>
+  <article class="article post white-box reveal md shadow article-type-post" id="post" itemscope itemprop="blogPost">
+  
+
+
+  
+  <div class="article-meta" id="top">
+    
+    
+    
+      <h1 class="title">
+        Elasticsearch .Net NEST 总结
+      </h1>
+      <div class='new-meta-box'>
+        
+          
+            
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="https://avatars.githubusercontent.com/u/31495215?s=400&u=3186d834482e8e93158b1e650122ce151ba8dbb2&v=4">
+    <p>Leon</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/elasticsearch/">elasticsearch</a><span class="sep"></span><a class="category-link" href="/categories/nest/">nest</a><span class="sep"></span><a class="category-link" href="/categories/net/">net</a>
+    </a>
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2021年3月17日</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+  <div class="new-meta-item browse leancloud">
+    <a class='notlink'>
+      
+      <div id="lc-pv" data-title="Elasticsearch .Net NEST 总结" data-path="/2021/03/17/Elasticsearch-Net-NEST-%E6%80%BB%E7%BB%93/">
+        <i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+        <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+        次浏览
+      </div>
+    </a>
+  </div>
+
+
+          
+        
+      </div>
+    
+  </div>
+
+
+  
+  
+  <span id="more"></span>
+
+<p>基于Elasticsearch NEST 封装了一层仓储<br>地址：<a target="_blank" rel="noopener" href="https://github.com/Cabbage-Leon">https://github.com/Cabbage-Leon</a></p>
+<h2 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h2><p>在Elasticsearch中，文档(Document)归属于一种类型(type),而这些类型存在于索引(index)中.<br>类比传统关系型数据库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Relational DB -&gt; Databases -&gt; Tables -&gt; Rows -&gt; Columns</span><br><span class="line">Elasticsearch -&gt; Indices   -&gt; Types  -&gt; Documents -&gt; Fields</span><br></pre></td></tr></table></figure>
+
+<p>DB使用过程:创建数据库-&gt;创建表（主要是设置各个字段的属性）-&gt;写入数<br>ES使用过程:创建索引-&gt;为索引maping一个Type（同样是设置类型中字段的属性）-&gt;写入数</p>
+<h2 id="客户端语法"><a href="#客户端语法" class="headerlink" title="客户端语法"></a>客户端语法</h2><p>链式lambda 表达式（ powerful query DSL）语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s &#x3D;&gt; s.Query(q &#x3D;&gt; q</span><br><span class="line">    .Term(p &#x3D;&gt; p.Name, &quot;elasticsearch&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>对象初始化语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var searchRequest &#x3D; new SearchRequest&lt;Model&gt;</span><br><span class="line">&#123;</span><br><span class="line">  Query &#x3D; new TermQuery</span><br><span class="line">  &#123;</span><br><span class="line">      Field &#x3D; &quot;name&quot;,</span><br><span class="line">      Value &#x3D; &quot;elasticsearch&quot;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Connection链接"><a href="#Connection链接" class="headerlink" title="Connection链接"></a>Connection链接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">&#x2F;&#x2F;&#x2F; 根据urls获取ElasticClient</span><br><span class="line">&#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">private ElasticClient GetClient(IList&lt;string&gt; urls, string defaultIndex &#x3D; &quot;&quot;)</span><br><span class="line">&#123;</span><br><span class="line">    if (urls &#x3D;&#x3D; null || urls.Count &lt; 1)</span><br><span class="line">    &#123;</span><br><span class="line">        throw new Exception(&quot;urls can not be null&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    var uris &#x3D; urls.Select(p &#x3D;&gt; new Uri(p)).ToArray();</span><br><span class="line">    var connectionPool &#x3D; new SniffingConnectionPool(uris);</span><br><span class="line">    var connectionSetting &#x3D; new ConnectionSettings(connectionPool);</span><br><span class="line">    if (!string.IsNullOrWhiteSpace(defaultIndex))</span><br><span class="line">    &#123;</span><br><span class="line">        connectionSetting.DefaultIndex(defaultIndex);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;&#x2F;connectionSetting.BasicAuthentication(&quot;&quot;, &quot;&quot;); &#x2F;&#x2F;设置账号密码</span><br><span class="line">    return new ElasticClient(connectionSetting);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Connection-Settings"><a href="#Connection-Settings" class="headerlink" title="Connection Settings"></a>Connection Settings</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">var settings &#x3D; new ConnectionSettings(pool);</span><br><span class="line">&#x2F;&#x2F;验证 未开启</span><br><span class="line">&#x2F;&#x2F;settings.BasicAuthentication(&quot;username&quot;, &quot;password&quot;);</span><br><span class="line">&#x2F;&#x2F;验证证书</span><br><span class="line">&#x2F;&#x2F;settings.ClientCertificate(&quot;&quot;);</span><br><span class="line">&#x2F;&#x2F;settings.ClientCertificates(new X509CertificateCollection());</span><br><span class="line">&#x2F;&#x2F;settings.ServerCertificateValidationCallback();</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;开启 第一次使用时进行嗅探，需链接池支持</span><br><span class="line">&#x2F;&#x2F;settings.SniffOnStartup(false);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;链接最大并发数</span><br><span class="line">&#x2F;&#x2F;settings.ConnectionLimit(80);</span><br><span class="line">&#x2F;&#x2F;标记为死亡节点的超时时间</span><br><span class="line">&#x2F;&#x2F;settings.DeadTimeout(new TimeSpan(10000));</span><br><span class="line">&#x2F;&#x2F;settings.MaxDeadTimeout(new TimeSpan(10000));</span><br><span class="line">&#x2F;&#x2F;最大重试次数</span><br><span class="line">&#x2F;&#x2F;settings.MaximumRetries(5);</span><br><span class="line">&#x2F;&#x2F;重试超时时间 默认是RequestTimeout</span><br><span class="line">&#x2F;&#x2F;settings.MaxRetryTimeout(new TimeSpan(50000));</span><br><span class="line">&#x2F;&#x2F;禁用代理自动检测</span><br><span class="line">&#x2F;&#x2F;settings.DisableAutomaticProxyDetection(true);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;禁用ping 第一次使用节点或使用被标记死亡的节点进行ping</span><br><span class="line">settings.DisablePing(false);</span><br><span class="line">&#x2F;&#x2F;ping 超时设置</span><br><span class="line">&#x2F;&#x2F;settings.PingTimeout(new TimeSpan(10000));</span><br><span class="line">&#x2F;&#x2F;选择节点</span><br><span class="line">&#x2F;&#x2F;settings.NodePredicate(node &#x3D;&gt;</span><br><span class="line">&#x2F;&#x2F;&#123;</span><br><span class="line">&#x2F;&#x2F;    </span><br><span class="line">&#x2F;&#x2F;        return true;</span><br><span class="line">&#x2F;&#x2F;    </span><br><span class="line">&#x2F;&#x2F;&#125;);</span><br><span class="line">&#x2F;&#x2F;默认操作索引</span><br><span class="line">&#x2F;&#x2F;settings.DefaultIndex(&quot;&quot;);</span><br><span class="line">&#x2F;&#x2F;字段名规则 与model字段同名</span><br><span class="line">&#x2F;&#x2F;settings.DefaultFieldNameInferrer(name &#x3D;&gt; name);</span><br><span class="line">&#x2F;&#x2F;根据Type 获取类型名</span><br><span class="line">&#x2F;&#x2F;settings.DefaultTypeNameInferrer(name &#x3D;&gt; name.Name);</span><br><span class="line">&#x2F;&#x2F;请求超时设置</span><br><span class="line">&#x2F;&#x2F;settings.RequestTimeout(new TimeSpan(10000));</span><br><span class="line">&#x2F;&#x2F;调试信息</span><br><span class="line">settings.DisableDirectStreaming(true);</span><br><span class="line">&#x2F;&#x2F;调试信息</span><br><span class="line">&#x2F;&#x2F;settings.EnableDebugMode((apiCallDetails) &#x3D;&gt;</span><br><span class="line">&#x2F;&#x2F;&#123;</span><br><span class="line">&#x2F;&#x2F;    &#x2F;&#x2F;请求完成 返回 apiCallDetails</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;&#125;);</span><br><span class="line">&#x2F;&#x2F;抛出异常 默认false，错误信息在每个操作的response中</span><br><span class="line">settings.ThrowExceptions(true);</span><br><span class="line">&#x2F;&#x2F;settings.OnRequestCompleted(apiCallDetails &#x3D;&gt;</span><br><span class="line">&#x2F;&#x2F;&#123;</span><br><span class="line">&#x2F;&#x2F;    &#x2F;&#x2F;请求完成 返回 apiCallDetails</span><br><span class="line">&#x2F;&#x2F;&#125;);</span><br><span class="line">&#x2F;&#x2F;settings.OnRequestDataCreated(requestData &#x3D;&gt;</span><br><span class="line">&#x2F;&#x2F;&#123;</span><br><span class="line">&#x2F;&#x2F;    &#x2F;&#x2F;请求的数据创建完成 返回请求的数据</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;&#125;);</span><br><span class="line">return new ElasticClient(settings);</span><br></pre></td></tr></table></figure>
+
+<h3 id="不同的连接池类型"><a href="#不同的连接池类型" class="headerlink" title="不同的连接池类型"></a>不同的连接池类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;支持ping 说明能够发现节点的状态</span><br><span class="line">&#x2F;&#x2F;支持嗅探 说明能够发现新的节点</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;应用于已知集群，请求时随机请求各个正常节点，支持ping 不支持嗅探</span><br><span class="line">IConnectionPool pool &#x3D; new StaticConnectionPool(nodes);                      &#x2F;&#x2F;推荐使用</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;IConnectionPool pool&#x3D;new SingleNodeConnectionPool(nodes[0]);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;可动态嗅探集群 ，随机请求 支持嗅探、ping</span><br><span class="line">&#x2F;&#x2F;IConnectionPool pool &#x3D; new SniffingConnectionPool(nodes);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;选择一个可用节点作为请求主节点，支持ping 不支持嗅探</span><br><span class="line">&#x2F;&#x2F;IConnectionPool pool &#x3D; new StickyConnectionPool(nodes);</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F;选择一个可用节点作为请求主节点，支持ping 支持嗅探</span><br><span class="line">&#x2F;&#x2F;IConnectionPool pool&#x3D;new StickySniffingConnectionPool(nodes);</span><br></pre></td></tr></table></figure>
+
+<h2 id="操作目标索引-类型选择"><a href="#操作目标索引-类型选择" class="headerlink" title="操作目标索引/类型选择"></a>操作目标索引/类型选择</h2><h3 id="指定索引"><a href="#指定索引" class="headerlink" title="指定索引"></a>指定索引</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;执行操作时指定索引</span><br><span class="line">client.Search&lt;Model&gt;(s &#x3D;&gt; s.Index(&quot;testindex&quot;));</span><br><span class="line">client.Index(data,o&#x3D;&gt;o.Index(&quot;testindex&quot;));</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定类型"><a href="#指定类型" class="headerlink" title="指定类型"></a>指定类型</h3><p>默认类型为索引数据的类名（自动转换为全小写，规则可自定义）。<br>如果特性设置Name[ElasticsearchType(Name = “datatype”)]则使用该名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;主动指定</span><br><span class="line">client.Index(data, o &#x3D;&gt; o.Type(new TypeName() &#123; Name &#x3D; &quot;datatype&quot;, Type &#x3D; typeof(Hotel) &#125;));</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据模型特性"><a href="#数据模型特性" class="headerlink" title="数据模型特性"></a>数据模型特性</h2><p>特性可以设置数据在es中的类型、名称、是否索引、分词、格式化等信息。</p>
+<p>应用于第一次创建索引后进行映射时。</p>
+<p>重要特性：</p>
+<ul>
+<li>[ElasticsearchType(Name = “文档的类型”,IdProperty = “文档的唯一键字段名”)]</li>
+<li>[Number(NumberType.Long,Name = “Id”)] 数字类型 +名称</li>
+<li>[Keyword(Name = “Name”,Index = true)]不需要分词的字符串，name=名称,index=是否建立索引</li>
+<li>[Text(Name = “Dic”, Index = true,Analyzer = “ik_max_word”)]需要分词的字符串，name=名称,index=是否建立索引,Analyzer=分词器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[ElasticsearchType(Name &#x3D; &quot;Model&quot;,IdProperty &#x3D; &quot;Id&quot;)]</span><br><span class="line">public class Model</span><br><span class="line">&#123;</span><br><span class="line">    [Number(NumberType.Long,Name &#x3D; &quot;Id&quot;)]</span><br><span class="line">    public long Id &#123; get; set; &#125;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; keyword 不分词</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    [Keyword(Name &#x3D; &quot;Name&quot;,Index &#x3D; true)]</span><br><span class="line">    public string Name &#123; get; set; &#125;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;summary&gt;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; text 分词,Analyzer &#x3D; &quot;ik_max_word&quot;</span><br><span class="line">    &#x2F;&#x2F;&#x2F; &lt;&#x2F;summary&gt;</span><br><span class="line">    [Text(Name &#x3D; &quot;Dic&quot;, Index &#x3D; true)]</span><br><span class="line">    public string Dic &#123; get; set; &#125;</span><br><span class="line"> </span><br><span class="line">    [Number(NumberType.Integer,Name &#x3D; &quot;State&quot;)]</span><br><span class="line">    public int State &#123; get; set; &#125;</span><br><span class="line"> </span><br><span class="line">    [Boolean(Name &#x3D; &quot;Deleted&quot;)]</span><br><span class="line">    public bool Deleted &#123; get; set; &#125;</span><br><span class="line">    [Date(Name &#x3D; &quot;AddTime&quot;)]</span><br><span class="line">    public DateTime AddTime &#123; get; set; &#125;</span><br><span class="line"> </span><br><span class="line">    [Number(NumberType.Float,Name &#x3D; &quot;PassingRate&quot;)]</span><br><span class="line">    public float PassingRate &#123; get; set; &#125;</span><br><span class="line"> </span><br><span class="line">    [Number(NumberType.Double, Name &#x3D; &quot;Dvalue&quot;)]</span><br><span class="line">    public double Dvalue &#123; get; set; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NEST-新增更新删除"><a href="#NEST-新增更新删除" class="headerlink" title="NEST 新增更新删除"></a>NEST 新增更新删除</h2><h3 id="添加单条数据"><a href="#添加单条数据" class="headerlink" title="添加单条数据"></a>添加单条数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;写入数据，指定索引</span><br><span class="line">            _client.Index(data, s &#x3D;&gt; s.Index(indexName));</span><br><span class="line">            &#x2F;&#x2F;指定索引、类型</span><br><span class="line">            _client.Index(data,s&#x3D;&gt;s.Index(indexName).Type(&quot;Model&quot;));</span><br><span class="line"> </span><br><span class="line">            &#x2F;&#x2F;写入数据，指定索引</span><br><span class="line">            _client.IndexMany(datas, indexName);</span><br><span class="line">            &#x2F;&#x2F;指定索引、类型</span><br><span class="line">            _client.IndexMany(datas, indexName, &quot;Model&quot;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;写入数据，指定索引</span><br><span class="line">            _client.Index(data, s &#x3D;&gt; s.Index(indexName));</span><br><span class="line">            &#x2F;&#x2F;指定索引、类型</span><br><span class="line">            _client.Index(data,s&#x3D;&gt;s.Index(indexName).Type(&quot;Model&quot;));</span><br><span class="line"> </span><br><span class="line">            &#x2F;&#x2F;写入数据，指定索引</span><br><span class="line">            _client.IndexMany(datas, indexName);</span><br><span class="line">            &#x2F;&#x2F;指定索引、类型</span><br><span class="line">            _client.IndexMany(datas, indexName, &quot;Model&quot;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h3><p>更新所有字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">DocumentPath&lt;Hotel&gt; deletePath&#x3D;new DocumentPath&lt;Hotel&gt;(2);</span><br><span class="line">Var response&#x3D;client.Update(deletePath,(p)&#x3D;&gt;p.Doc(new Hotel()&#123;vendorName &#x3D; &quot;test2update...&quot;&#125;));</span><br><span class="line">&#x2F;&#x2F;或</span><br><span class="line">IUpdateRequest&lt;Hotel, Hotel&gt; request &#x3D; new UpdateRequest&lt;Hotel, Hotel&gt;(deletePath)</span><br><span class="line">            &#123;</span><br><span class="line">                Doc &#x3D; new Hotel()</span><br><span class="line">                &#123;</span><br><span class="line">                    priceID &#x3D; 888,</span><br><span class="line">                    vendorName &#x3D; &quot;test4update........&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">            var response &#x3D; client.Update&lt;Hotel, Hotel&gt;(request);</span><br></pre></td></tr></table></figure>
+
+<p>更新部分字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IUpdateRequest&lt;Hotel, HotelDto&gt; request &#x3D; new UpdateRequest&lt;Hotel, HotelDto&gt;(deletePath)</span><br><span class="line">            &#123;</span><br><span class="line">                Doc &#x3D; new HotelDto()</span><br><span class="line">                &#123;</span><br><span class="line">                    priceID &#x3D; 888,</span><br><span class="line">                    vendorName &#x3D; &quot;test4update........&quot;</span><br><span class="line">                &#125;</span><br><span class="line"> </span><br><span class="line">            &#125;;</span><br><span class="line">            var response &#x3D; client.Update(request);</span><br></pre></td></tr></table></figure>
+
+<p>更新时使用本版号加锁机制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;查询到版本号</span><br><span class="line">            var result &#x3D; _client.Search&lt;Model&gt;(</span><br><span class="line">                s &#x3D;&gt;</span><br><span class="line">                    s.Index(indexName)</span><br><span class="line">                        .Query(q &#x3D;&gt; q.Term(tm &#x3D;&gt; tm.Field(fd&#x3D;&gt;fd.State).Value(1))).Size(1)</span><br><span class="line">                        .Version()&#x2F;&#x2F;结果中包含版本号</span><br><span class="line">                        );</span><br><span class="line">            foreach (var s in result.Hits)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(s.Id + &quot;  -  &quot; + s.Version);</span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">            var path &#x3D; new DocumentPath&lt;Model&gt;(1);</span><br><span class="line">            &#x2F;&#x2F;更新时带上版本号 如果服务端版本号与传入的版本好相同才能更新成功</span><br><span class="line">            var response &#x3D; _client.Update(path, (p) &#x3D;&gt; p</span><br><span class="line">                .Index(indexName)</span><br><span class="line">                .Type(typeof(Model))</span><br><span class="line">                .Version(2)&#x2F;&#x2F;限制es中版本号为2时才能成功</span><br><span class="line">                .Doc(new Model() &#123; Name &#x3D; &quot;测测测&quot; + DateTime.Now &#125;)</span><br><span class="line">                );</span><br></pre></td></tr></table></figure>
+
+<h2 id="NEST-查询"><a href="#NEST-查询" class="headerlink" title="NEST 查询"></a>NEST 查询</h2><p>基本搜索</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">var result &#x3D; _client.Search&lt;Model&gt;(</span><br><span class="line">                s &#x3D;&gt; s</span><br><span class="line">                    .Explain() &#x2F;&#x2F;参数可以提供查询的更多详情。</span><br><span class="line">                    .FielddataFields(fs &#x3D;&gt; fs &#x2F;&#x2F;对指定字段进行分析</span><br><span class="line">                        .Field(p &#x3D;&gt; p.Name)</span><br><span class="line">                        .Field(p &#x3D;&gt; p.Dic)</span><br><span class="line">                    )</span><br><span class="line">                    .From(0) &#x2F;&#x2F;跳过的数据个数</span><br><span class="line">                    .Size(50) &#x2F;&#x2F;返回数据个数</span><br><span class="line">                    .Query(q &#x3D;&gt;</span><br><span class="line">                        q.Term(p &#x3D;&gt; p.State, 100) &#x2F;&#x2F; 主要用于精确匹配哪些值，比如数字，日期，布尔值或 not_analyzed的字符串(未经分析的文本数据类型)：</span><br><span class="line">                        &amp;&amp;</span><br><span class="line">                        q.Term(p &#x3D;&gt; p.Name.Suffix(&quot;temp&quot;), &quot;姓名&quot;) &#x2F;&#x2F;用于自定义属性的查询 </span><br><span class="line">                        &amp;&amp;</span><br><span class="line">                        q.Bool( &#x2F;&#x2F;bool 查询</span><br><span class="line">                            b &#x3D;&gt; b</span><br><span class="line">                                &#x2F;&#x2F;must  should  mushnot</span><br><span class="line">                                .Must(mt &#x3D;&gt; mt &#x2F;&#x2F;所有分句必须全部匹配，与 AND 相同</span><br><span class="line">                                    .TermRange(p &#x3D;&gt; p.Field(f &#x3D;&gt; f.State).GreaterThan(&quot;0&quot;).LessThan(&quot;1&quot;))) &#x2F;&#x2F;指定范围查找</span><br><span class="line">                                .Should(sd &#x3D;&gt; sd &#x2F;&#x2F;至少有一个分句匹配，与 OR 相同</span><br><span class="line">                                    .Term(p &#x3D;&gt; p.State, 32915),</span><br><span class="line">                                    sd &#x3D;&gt; sd.Terms(t &#x3D;&gt; t.Field(fd &#x3D;&gt; fd.State).Terms(new[] &#123; 10, 20, 30 &#125;)),</span><br><span class="line">                                    &#x2F;&#x2F;多值</span><br><span class="line">                                    &#x2F;&#x2F;||</span><br><span class="line">                                    &#x2F;&#x2F;sd.Term(p &#x3D;&gt; p.priceID, 1001)</span><br><span class="line">                                    &#x2F;&#x2F;||</span><br><span class="line">                                    &#x2F;&#x2F;sd.Term(p &#x3D;&gt; p.priceID, 1005)</span><br><span class="line">                                    sd &#x3D;&gt; sd.TermRange(tr &#x3D;&gt; tr.GreaterThan(&quot;10&quot;).LessThan(&quot;12&quot;).Field(f &#x3D;&gt; f.State)),</span><br><span class="line">                                    &#x2F;&#x2F;出入的时间必须指明时区</span><br><span class="line">                                    sd &#x3D;&gt; sd.DateRange(tr &#x3D;&gt; tr.GreaterThan(DateTime.Now.AddDays(-1)).LessThan(DateTime.Now).Field(f &#x3D;&gt; f.CreateTime))</span><br><span class="line"> </span><br><span class="line">                                )</span><br><span class="line">                                .MustNot(mn &#x3D;&gt; mn&#x2F;&#x2F;所有分句都必须不匹配，与 NOT 相同</span><br><span class="line">                                    .Term(p &#x3D;&gt; p.State, 1001)</span><br><span class="line">                                    ,</span><br><span class="line">                                    mn &#x3D;&gt; mn.Bool(</span><br><span class="line">                                        bb &#x3D;&gt; bb.Must(mt &#x3D;&gt; mt</span><br><span class="line">                                              .Match(mc &#x3D;&gt; mc.Field(fd &#x3D;&gt; fd.Name).Query(&quot;至尊&quot;))</span><br><span class="line">                                        ))</span><br><span class="line">                                )</span><br><span class="line">                            )</span><br><span class="line">                    )&#x2F;&#x2F;查询条件</span><br><span class="line">                .Sort(st &#x3D;&gt; st.Ascending(asc &#x3D;&gt; asc.Id))&#x2F;&#x2F;排序</span><br><span class="line">                &#x2F;&#x2F;返回特定的字段</span><br><span class="line">                &#x2F;&#x2F;注:2.x是sc.Include</span><br><span class="line">                .Source(sc &#x3D;&gt; sc.Includes(ic &#x3D;&gt; ic</span><br><span class="line">                    .Fields(</span><br><span class="line">                        fd &#x3D;&gt; fd.Name,</span><br><span class="line">                        fd &#x3D;&gt; fd.Id,</span><br><span class="line">                        fd &#x3D;&gt; fd.CreateTime))) </span><br><span class="line">               );</span><br></pre></td></tr></table></figure>
+
+<h3 id="分页、-深度分页"><a href="#分页、-深度分页" class="headerlink" title="分页、 深度分页"></a>分页、 深度分页</h3><p>搜索时通过from+size控制分页，但是由于底层机制，深度分页将造成更大的性能消耗。所以es默认限制from+size⇐10000</p>
+<p>想要更深的分页，只能通过上页结果作为条件进行翻页。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var response&#x3D;_client.Search&lt;Model&gt;(s &#x3D;&gt; s.Query(q &#x3D;&gt; q.Term(t &#x3D;&gt; t.Field(fd &#x3D;&gt; fd.State).Value(1)))</span><br><span class="line">            .Size(1000)    </span><br><span class="line">            .Sort(st &#x3D;&gt; st.Descending(ds &#x3D;&gt; ds.Id))</span><br><span class="line">                .SearchAfter(new object[]</span><br><span class="line">                &#123;</span><br><span class="line">                    10,&#x2F;&#x2F;上一次结果排序的最后ID值</span><br><span class="line">                    &#x2F;&#x2F;可以是多个排序字段的值</span><br><span class="line">                &#125;));</span><br></pre></td></tr></table></figure>
+
+<h3 id="扫描和滚屏（用于非实时的获取大量数据）"><a href="#扫描和滚屏（用于非实时的获取大量数据）" class="headerlink" title="扫描和滚屏（用于非实时的获取大量数据）"></a>扫描和滚屏（用于非实时的获取大量数据）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">Action&lt;int&gt; sc1 &#x3D; (id) &#x3D;&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                string scrollid &#x3D; &quot;&quot;;</span><br><span class="line">                &#x2F;&#x2F;todo:5.x 多了Slice设置 移除SearchType.Scan</span><br><span class="line">                var result &#x3D; _client.Search&lt;Model&gt;(s &#x3D;&gt; s.Index(indexName).Query(q &#x3D;&gt; q.MatchAll())</span><br><span class="line">                    .Size(15)</span><br><span class="line">                    .Sort(st&#x3D;&gt;st.Descending(ds&#x3D;&gt;ds.Id))</span><br><span class="line">                    .Scroll(&quot;1m&quot;)</span><br><span class="line">                    &#x2F;&#x2F;id从0开始 0,1,2...</span><br><span class="line">                    &#x2F;&#x2F;length&#x3D;max</span><br><span class="line">                    &#x2F;&#x2F;例：max&#x3D;3 id&#x3D;0,id&#x3D;1,id&#x3D;2</span><br><span class="line">                    .Slice(sl &#x3D;&gt; sl.Id(id).Max(3))</span><br><span class="line">                    );</span><br><span class="line"> </span><br><span class="line">                &#x2F;&#x2F;得到滚动扫描的id</span><br><span class="line">                scrollid &#x3D; result.ScrollId;</span><br><span class="line">                foreach (var info in result.Documents)</span><br><span class="line">                &#123;</span><br><span class="line">                    Console.WriteLine(info.Id + &quot; - &quot; + &quot; -批次count &quot; + result.Documents.Count + &quot; - 线程&quot;+Thread.CurrentThread.ManagedThreadId);</span><br><span class="line">                &#125;</span><br><span class="line">                while (true)</span><br><span class="line">                &#123;</span><br><span class="line">                    &#x2F;&#x2F;执行滚动扫描得到数据 返回数据量是 result.Shards.Successful*size(查询成功的分片数*size)</span><br><span class="line">                    var result1 &#x3D; _client.Scroll&lt;Model&gt;(&quot;1m&quot;, scrollid);</span><br><span class="line">                    if (result1.Documents &#x3D;&#x3D; null || !result1.Documents.Any())</span><br><span class="line">                        break;</span><br><span class="line">                    foreach (var info in result1.Documents)</span><br><span class="line">                    &#123;</span><br><span class="line">                        Console.WriteLine(info.Id + &quot; - &quot; +&quot; -批次count &quot;+ result1.Documents.Count+ &quot; - 线程&quot; + Thread.CurrentThread.ManagedThreadId);</span><br><span class="line">                    &#125;</span><br><span class="line">                    &#x2F;&#x2F;得到新的id</span><br><span class="line">                    scrollid &#x3D; result1.ScrollId;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">           var t1&#x3D; Task.Factory.StartNew(() &#x3D;&gt; &#123; sc1(0); &#125;);</span><br><span class="line">            var t2&#x3D; Task.Factory.StartNew(() &#x3D;&gt; &#123; sc1(1); &#125;);</span><br><span class="line">            var t3&#x3D; Task.Factory.StartNew(() &#x3D;&gt; &#123; sc1(2); &#125;);</span><br><span class="line">            t1.Wait();</span><br><span class="line">            t2.Wait();</span><br><span class="line">            t3.Wait();</span><br></pre></td></tr></table></figure>
+
+<h3 id="多查询、排序条件拼接"><a href="#多查询、排序条件拼接" class="headerlink" title="多查询、排序条件拼接"></a>多查询、排序条件拼接</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">bool useStateDesc &#x3D; true;</span><br><span class="line"> </span><br><span class="line">            &#x2F;&#x2F;must 条件</span><br><span class="line">            var mustQuerys &#x3D; new List&lt;Func&lt;QueryContainerDescriptor&lt;Model&gt;, QueryContainer&gt;&gt;();</span><br><span class="line">            &#x2F;&#x2F;Deleted</span><br><span class="line">            mustQuerys.Add(mt &#x3D;&gt; mt.Term(tm &#x3D;&gt; tm.Field(fd &#x3D;&gt; fd.Deleted).Value(false)));</span><br><span class="line">            &#x2F;&#x2F;CreateTime</span><br><span class="line">            mustQuerys.Add(mt &#x3D;&gt; mt.DateRange(tm &#x3D;&gt; tm.Field(fd &#x3D;&gt; fd.CreateTime).GreaterThanOrEquals(DateTime.Now.AddDays(-1)).LessThanOrEquals(DateTime.Now)));</span><br><span class="line">            &#x2F;&#x2F;should 条件</span><br><span class="line">            var shouldQuerys &#x3D; new List&lt;Func&lt;QueryContainerDescriptor&lt;Model&gt;, QueryContainer&gt;&gt;();</span><br><span class="line">            &#x2F;&#x2F;state</span><br><span class="line">            shouldQuerys.Add(mt &#x3D;&gt; mt.Term(tm &#x3D;&gt; tm.Field(fd &#x3D;&gt; fd.State).Value(1)));</span><br><span class="line">            shouldQuerys.Add(mt &#x3D;&gt; mt.Term(tm &#x3D;&gt; tm.Field(fd &#x3D;&gt; fd.State).Value(2)));</span><br><span class="line">            &#x2F;&#x2F;排序</span><br><span class="line">            Func&lt;SortDescriptor&lt;Model&gt;, IPromise&lt;IList&lt;ISort&gt;&gt;&gt; sortDesc &#x3D; sd &#x3D;&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                &#x2F;&#x2F;根据分值排序</span><br><span class="line">                sd.Descending(SortSpecialField.Score);</span><br><span class="line"> </span><br><span class="line">                &#x2F;&#x2F;排序</span><br><span class="line">                if (useStateDesc)</span><br><span class="line">                    sd.Descending(d &#x3D;&gt; d.State);</span><br><span class="line">                else</span><br><span class="line">                    sd.Descending(d &#x3D;&gt; d.Id);</span><br><span class="line">                return sd;</span><br><span class="line">            &#125;;</span><br><span class="line">            var result2 &#x3D;_client.Search&lt;Model&gt;(s &#x3D;&gt; s</span><br><span class="line">                       .Index(indexName)</span><br><span class="line">                       .Query(q &#x3D;&gt; q.Bool(b &#x3D;&gt; b.Must(mustQuerys).Should(shouldQuerys)))</span><br><span class="line">                       .Size(100)</span><br><span class="line">                       .From(0)</span><br><span class="line">                       .Sort(sortDesc)</span><br><span class="line">                   );</span><br></pre></td></tr></table></figure>
+
+<h3 id="得分控制"><a href="#得分控制" class="headerlink" title="得分控制"></a>得分控制</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;使用functionscore计算得分</span><br><span class="line">            var result1 &#x3D; _client.Search&lt;Model&gt;(s &#x3D;&gt; s</span><br><span class="line">                            .Query(q &#x3D;&gt; q.FunctionScore(f &#x3D;&gt; f</span><br><span class="line">                                      &#x2F;&#x2F;查询区</span><br><span class="line">                                      .Query(qq &#x3D;&gt; qq.Term(t &#x3D;&gt; t.Field(fd &#x3D;&gt; fd.State).Value(1))</span><br><span class="line">                                                      ||</span><br><span class="line">                                                   qq.Term(t &#x3D;&gt; t.Field(fd &#x3D;&gt; fd.State).Value(2))</span><br><span class="line">                                      )</span><br><span class="line">                                      .Boost(1.0) &#x2F;&#x2F;functionscore 对分值影响</span><br><span class="line">                                      .BoostMode(FunctionBoostMode.Replace)&#x2F;&#x2F;计算boost 模式 ；Replace为替换</span><br><span class="line">                                      .ScoreMode(FunctionScoreMode.Sum) &#x2F;&#x2F;计算score 模式；Sum为累加</span><br><span class="line">                                                                        &#x2F;&#x2F;逻辑区</span><br><span class="line">                                      .Functions(fun &#x3D;&gt; fun</span><br><span class="line">                                          .Weight(w &#x3D;&gt; w.Weight(3).Filter(ft &#x3D;&gt; ft</span><br><span class="line">                                              .Term(t &#x3D;&gt; t.Field(fd &#x3D;&gt; fd.State).Value(1))))&#x2F;&#x2F;匹配cityid +3</span><br><span class="line">                                          .Weight(w &#x3D;&gt; w.Weight(2).Filter(ft &#x3D;&gt; ft</span><br><span class="line">                                              .Term(t &#x3D;&gt; t.Field(fd &#x3D;&gt; fd.State).Value(2))))&#x2F;&#x2F;匹配pvcid +2</span><br><span class="line">                                      )</span><br><span class="line">                                )</span><br><span class="line">                               )</span><br><span class="line">                            .Size(3000)</span><br><span class="line">                            .Sort(st &#x3D;&gt; st.Descending(SortSpecialField.Score))</span><br><span class="line">                            );</span><br><span class="line">            &#x2F;&#x2F;结果中 State&#x3D;1，得分&#x3D;3； State&#x3D;2 ，得分&#x3D;2 ,两者都满足的，得分&#x3D;5</span><br></pre></td></tr></table></figure>
+
+<h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><h3 id="聚合-基本"><a href="#聚合-基本" class="headerlink" title="聚合-基本"></a>聚合-基本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var result &#x3D; _client.Search&lt;Model&gt;(s &#x3D;&gt; s</span><br><span class="line">                .Index(indexName)</span><br><span class="line">                .From(0)</span><br><span class="line">                .Size(15)</span><br><span class="line">                .Aggregations(ag &#x3D;&gt; ag</span><br><span class="line">                        .ValueCount(&quot;Count&quot;, vc &#x3D;&gt; vc.Field(fd &#x3D;&gt; fd.Id))&#x2F;&#x2F;总数</span><br><span class="line">                        .Sum(&quot;vendorPrice_Sum&quot;, su &#x3D;&gt; su.Field(fd &#x3D;&gt; fd.Id))&#x2F;&#x2F;求和</span><br><span class="line">                        .Max(&quot;vendorPrice_Max&quot;, m &#x3D;&gt; m.Field(fd &#x3D;&gt; fd.Id))&#x2F;&#x2F;最大值</span><br><span class="line">                        .Min(&quot;vendorPrice_Min&quot;, m &#x3D;&gt; m.Field(fd &#x3D;&gt; fd.Id))&#x2F;&#x2F;最小值</span><br><span class="line">                        .Average(&quot;vendorPrice_Avg&quot;, avg &#x3D;&gt; avg.Field(fd &#x3D;&gt; fd.Id))&#x2F;&#x2F;平均值</span><br><span class="line">                        .Terms(&quot;vendorID_group&quot;, t &#x3D;&gt; t.Field(fd &#x3D;&gt; fd.Id).Size(100))&#x2F;&#x2F;分组</span><br><span class="line">                    )</span><br><span class="line">                );</span><br></pre></td></tr></table></figure>
+
+<h3 id="聚合-分组"><a href="#聚合-分组" class="headerlink" title="聚合-分组"></a>聚合-分组</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">var result &#x3D; _client.Search&lt;Model&gt;(s &#x3D;&gt; s</span><br><span class="line">                .Index(indexName)</span><br><span class="line">                .Size(0)</span><br><span class="line">                .Aggregations(ag &#x3D;&gt; ag</span><br><span class="line">                    .Terms(&quot;Group_group&quot;, &#x2F;&#x2F;Group 分组</span><br><span class="line">                        t &#x3D;&gt; t.Field(fd &#x3D;&gt; fd.Group)</span><br><span class="line">                        .Size(100)</span><br><span class="line">                        .Aggregations(agg &#x3D;&gt; agg</span><br><span class="line">                                        .Terms(&quot;Group_state_group&quot;, &#x2F;&#x2F;Group_state</span><br><span class="line">                                            tt &#x3D;&gt; tt.Field(fd &#x3D;&gt; fd.State)</span><br><span class="line">                                            .Size(50)</span><br><span class="line">                                            .Aggregations(aggg &#x3D;&gt; aggg</span><br><span class="line">                                                .Average(&quot;g_g_Avg&quot;, av &#x3D;&gt; av.Field(fd &#x3D;&gt; fd.Dvalue))&#x2F;&#x2F;Price avg</span><br><span class="line">                                                .Max(&quot;g_g_Max&quot;, m &#x3D;&gt; m.Field(fd &#x3D;&gt; fd.Dvalue))&#x2F;&#x2F;Price max</span><br><span class="line">                                                .Min(&quot;g_g_Min&quot;, m &#x3D;&gt; m.Field(fd &#x3D;&gt; fd.Dvalue))&#x2F;&#x2F;Price min</span><br><span class="line">                                                .ValueCount(&quot;g_g_Count&quot;, m &#x3D;&gt; m.Field(fd &#x3D;&gt; fd.Id))&#x2F;&#x2F;总记录数</span><br><span class="line">                                                )</span><br><span class="line">                                            )</span><br><span class="line">                                        .Cardinality(&quot;g_count&quot;, dy &#x3D;&gt; dy.Field(fd &#x3D;&gt; fd.State))&#x2F;&#x2F;分组数量</span><br><span class="line">                                        .ValueCount(&quot;g_Count&quot;, c &#x3D;&gt; c.Field(fd &#x3D;&gt; fd.Id))</span><br><span class="line">                            )</span><br><span class="line">                        )</span><br><span class="line">                        .Cardinality(&quot;vendorID_group_count&quot;, dy &#x3D;&gt; dy.Field(fd &#x3D;&gt; fd.Group))&#x2F;&#x2F;分组数量</span><br><span class="line">                        .ValueCount(&quot;Count&quot;, c &#x3D;&gt; c.Field(fd &#x3D;&gt; fd.Id))&#x2F;&#x2F;总记录数</span><br><span class="line">                ) &#x2F;&#x2F;分组</span><br><span class="line">                );</span><br></pre></td></tr></table></figure>
+
+<h3 id="复杂聚合分组及结果解析"><a href="#复杂聚合分组及结果解析" class="headerlink" title="复杂聚合分组及结果解析"></a>复杂聚合分组及结果解析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">var mustQuerys &#x3D; new List&lt;Func&lt;QueryContainerDescriptor&lt;Model&gt;, QueryContainer&gt;&gt;();</span><br><span class="line"> </span><br><span class="line">            mustQuerys.Add(t &#x3D;&gt; t.Term(f &#x3D;&gt; f.Deleted, false));</span><br><span class="line"> </span><br><span class="line">            var result &#x3D;</span><br><span class="line">                _client.Search&lt;Model&gt;(</span><br><span class="line">                    s &#x3D;&gt; s.Index(indexName)</span><br><span class="line">                        .Query(q &#x3D;&gt; q</span><br><span class="line">                                .Bool(b &#x3D;&gt; b.Must(mustQuerys))</span><br><span class="line">                        )</span><br><span class="line">                        .Size(0)</span><br><span class="line">                        .Aggregations(ag &#x3D;&gt; ag</span><br><span class="line"> </span><br><span class="line">                                    .Terms(&quot;Group_Group&quot;, tm &#x3D;&gt; tm</span><br><span class="line">                                                                .OrderDescending(&quot;Dvalue_avg&quot;)&#x2F;&#x2F;使用平均值排序 desc</span><br><span class="line">                                                                .Field(fd &#x3D;&gt; fd.Group)</span><br><span class="line">                                                                .Size(100)</span><br><span class="line">                                                                .Aggregations(agg &#x3D;&gt; agg</span><br><span class="line">                                                                    .TopHits(&quot;top_test_hits&quot;, th &#x3D;&gt; th.Sort(srt &#x3D;&gt; srt.Field(fd &#x3D;&gt; fd.Dvalue).Descending()).Size(1))&#x2F;&#x2F;取出该分组下按dvalue分组</span><br><span class="line">                                                                    .Max(&quot;Dvalue_Max&quot;, m &#x3D;&gt; m.Field(fd &#x3D;&gt; fd.Dvalue))</span><br><span class="line">                                                                    .Min(&quot;Dvalue_Min&quot;, m &#x3D;&gt; m.Field(fd &#x3D;&gt; fd.Dvalue))</span><br><span class="line">                                                                    .Average(&quot;Dvalue_avg&quot;, avg &#x3D;&gt; avg.Field(fd &#x3D;&gt; fd.Dvalue))&#x2F;&#x2F;平均值</span><br><span class="line">                                                                    )</span><br><span class="line"> </span><br><span class="line">                                                                )</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">                                )</span><br><span class="line">                        );</span><br><span class="line">            var vendorIdGroup &#x3D; (BucketAggregate)result.Aggregations[&quot;VendorID_Group&quot;];</span><br><span class="line">            foreach (var bucket1 in vendorIdGroup.Items)</span><br><span class="line">            &#123;</span><br><span class="line">                var bucket &#x3D; (KeyedBucket&lt;Model&gt;)bucket1;</span><br><span class="line">                var maxPrice &#x3D; ((ValueAggregate)bucket.Aggregations[&quot;vendorPrice_Max&quot;]).Value;</span><br><span class="line">                var minPrice &#x3D; ((ValueAggregate)bucket.Aggregations[&quot;vendorPrice_Min&quot;]).Value;</span><br><span class="line">                var sources &#x3D; ((TopHitsAggregate)bucket.Aggregations[&quot;top_vendor_hits&quot;]).Documents&lt;Model&gt;().ToList();</span><br><span class="line">                var data &#x3D; sources.FirstOrDefault();</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+  
+  
+    
+    <div class='footer'>
+      
+      
+      
+        <div class='copyright'>
+          <blockquote>
+            
+              
+                <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+              
+            
+          </blockquote>
+        </div>
+      
+      
+        <div class='donate'>
+          <div class='imgs'>
+            
+          </div>
+        </div>
+      
+    </div>
+  
+  
+    
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-18T17:19:21+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2021年3月18日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/elasticsearch/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>elasticsearch</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/nest/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>nest</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/net/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>net</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+  
+  
+
+  
+    <div class="prev-next">
+      
+        <a class='prev' href='/2021/03/18/1-Kubernetes%E7%AE%80%E4%BB%8B/'>
+          <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Kubernetes简介</p>
+          <p class='content'>
+
+Kubernetes简介来源bilibili尚硅谷K8S视频：https://www.bilibili.com/video/BV1GT4y1A756
+中文官网：https://kuberne...</p>
+        </a>
+      
+      
+        <a class='next' href='/2021/03/09/%E4%BD%BF%E7%94%A8ElasticSearch%EF%BC%8CKibana%EF%BC%8CASP-NET-Core%E5%92%8CDocker%E5%8F%AF%E8%A7%86%E5%8C%96%E6%95%B0%E6%8D%AE/'>
+          <p class='title'>使用ElasticSearch，Kibana，ASP.NET Core和Docker可视化数据<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+          <p class='content'>
+
+背景：目前在做酒店项目，酒店分多个板块，其中一块需要整合供应商酒店资源。考虑到酒店资源的数据会随这接入供应商的数量增多而增多，对数据存储会有很高的要求，综合考虑下还是选择了Elasticse...</p>
+        </a>
+      
+    </div>
+  
+</article>
+
+
+  
+
+  <article class="post white-box reveal shadow" id="comments">
+    <p ct><i class='fas fa-comments'></i> 评论</p>
+    
+    <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+  </article>
+
+
+
+
+
+
+</div>
+<aside class='l_side'>
+  
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">存储结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">客户端语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Connection%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">Connection链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Connection-Settings"><span class="toc-number">3.1.</span> <span class="toc-text">Connection Settings</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.2.</span> <span class="toc-text">不同的连接池类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%9B%AE%E6%A0%87%E7%B4%A2%E5%BC%95-%E7%B1%BB%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="toc-number">4.</span> <span class="toc-text">操作目标索引&#x2F;类型选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E7%B4%A2%E5%BC%95"><span class="toc-number">4.1.</span> <span class="toc-text">指定索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.2.</span> <span class="toc-text">指定类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B%E7%89%B9%E6%80%A7"><span class="toc-number">5.</span> <span class="toc-text">数据模型特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NEST-%E6%96%B0%E5%A2%9E%E6%9B%B4%E6%96%B0%E5%88%A0%E9%99%A4"><span class="toc-number">6.</span> <span class="toc-text">NEST 新增更新删除</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8D%95%E6%9D%A1%E6%95%B0%E6%8D%AE"><span class="toc-number">6.1.</span> <span class="toc-text">添加单条数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">6.2.</span> <span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="toc-number">6.3.</span> <span class="toc-text">更新数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NEST-%E6%9F%A5%E8%AF%A2"><span class="toc-number">7.</span> <span class="toc-text">NEST 查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E3%80%81-%E6%B7%B1%E5%BA%A6%E5%88%86%E9%A1%B5"><span class="toc-number">7.1.</span> <span class="toc-text">分页、 深度分页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%AB%E6%8F%8F%E5%92%8C%E6%BB%9A%E5%B1%8F%EF%BC%88%E7%94%A8%E4%BA%8E%E9%9D%9E%E5%AE%9E%E6%97%B6%E7%9A%84%E8%8E%B7%E5%8F%96%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">扫描和滚屏（用于非实时的获取大量数据）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%9F%A5%E8%AF%A2%E3%80%81%E6%8E%92%E5%BA%8F%E6%9D%A1%E4%BB%B6%E6%8B%BC%E6%8E%A5"><span class="toc-number">7.3.</span> <span class="toc-text">多查询、排序条件拼接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%86%E6%8E%A7%E5%88%B6"><span class="toc-number">7.4.</span> <span class="toc-text">得分控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%9A%E5%90%88"><span class="toc-number">8.</span> <span class="toc-text">聚合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%9A%E5%90%88-%E5%9F%BA%E6%9C%AC"><span class="toc-number">8.1.</span> <span class="toc-text">聚合-基本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%9A%E5%90%88-%E5%88%86%E7%BB%84"><span class="toc-number">8.2.</span> <span class="toc-text">聚合-分组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E8%81%9A%E5%90%88%E5%88%86%E7%BB%84%E5%8F%8A%E7%BB%93%E6%9E%9C%E8%A7%A3%E6%9E%90"><span class="toc-number">8.3.</span> <span class="toc-text">复杂聚合分组及结果解析</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+		  
+		  <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+<script>
+  window.pdata={}
+  pdata.ispage=true;
+  pdata.postTitle="Elasticsearch .Net NEST 总结";
+  pdata.commentPath="";
+  pdata.commentPlaceholder="";
+  // header 这里无论是否开启pjax都需要
+  var l_header=document.getElementById("l_header");
+  
+  l_header.classList.add("show");
+  
+  
+    // cover
+    var cover_wrapper=document.querySelector('.cover-wrapper');
+    
+    cover_wrapper.id="none";
+    cover_wrapper.style.display="none";
+    
+  
+</script>
+
+        </div>
+        
+  
+  <footer class="footer clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='3175833810'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="mailto:745567906@qq.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://github.com/Cabbage-Leon"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=63035382"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+                
+              </a>
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/4.3.1" target="_blank" class="codename">Volantis</a>
+        作为主题
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2021-2021 XXX</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+        <a id="s-top" class="fas fa-arrow-up fa-fw" href="javascript:void(0)"></a>
+      </div>
+    </div>
+    <div>
+      <script>
+/************这个文件存放不需要重载的全局变量和全局函数*********/
+window.volantis={};
+window.volantis.loadcss=document.getElementById("loadcss");
+/******************** Pjax ********************************/
+function VPjax(){
+	this.list=[] // 存放回调函数
+	this.start=()=>{
+	  for(var i=0;i<this.list.length;i++){
+		this.list[i].run();
+	  }
+	}
+	this.push=(fn,name)=>{
+		var f=new PjaxItem(fn,name);
+		this.list.push(f);
+	}
+	// 构造一个可以run的对象
+	function PjaxItem(fn,name){
+		// 函数名称
+		this.name = name || fn.name
+		// run方法
+		this.run=()=>{
+			fn()
+		}
+	}
+}
+volantis.pjax={}
+volantis.pjax.method={
+	complete: new VPjax(),
+	error: new VPjax(),
+	send: new VPjax()
+}
+volantis.pjax={
+	...volantis.pjax,
+	push: volantis.pjax.method.complete.push,
+	error: volantis.pjax.method.error.push,
+	send: volantis.pjax.method.send.push
+}
+/********************脚本懒加载函数********************************/
+// 已经加入了setTimeout
+function loadScript(src, cb) {
+	setTimeout(function() {
+		var HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+		var script = document.createElement('script');
+		script.setAttribute('type','text/javascript');
+		if (cb) script.onload = cb;
+		script.setAttribute('src', src);
+		HEAD.appendChild(script);
+	});
+}
+//https://github.com/filamentgroup/loadCSS
+var loadCSS = function( href, before, media, attributes ){
+	var doc = window.document;
+	var ss = doc.createElement( "link" );
+	var ref;
+	if( before ){
+		ref = before;
+	}
+	else {
+		var refs = ( doc.body || doc.getElementsByTagName( "head" )[ 0 ] ).childNodes;
+		ref = refs[ refs.length - 1];
+	}
+	var sheets = doc.styleSheets;
+	if( attributes ){
+		for( var attributeName in attributes ){
+			if( attributes.hasOwnProperty( attributeName ) ){
+				ss.setAttribute( attributeName, attributes[attributeName] );
+			}
+		}
+	}
+	ss.rel = "stylesheet";
+	ss.href = href;
+	ss.media = "only x";
+	function ready( cb ){
+		if( doc.body ){
+			return cb();
+		}
+		setTimeout(function(){
+			ready( cb );
+		});
+	}
+	ready( function(){
+		ref.parentNode.insertBefore( ss, ( before ? ref : ref.nextSibling ) );
+	});
+	var onloadcssdefined = function( cb ){
+		var resolvedHref = ss.href;
+		var i = sheets.length;
+		while( i-- ){
+			if( sheets[ i ].href === resolvedHref ){
+				return cb();
+			}
+		}
+		setTimeout(function() {
+			onloadcssdefined( cb );
+		});
+	};
+	function loadCB(){
+		if( ss.addEventListener ){
+			ss.removeEventListener( "load", loadCB );
+		}
+		ss.media = media || "all";
+	}
+	if( ss.addEventListener ){
+		ss.addEventListener( "load", loadCB);
+	}
+	ss.onloadcssdefined = onloadcssdefined;
+	onloadcssdefined( loadCB );
+	return ss;
+};
+</script>
+<script>
+  
+  loadCSS("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14/css/all.min.css", window.volantis.loadcss);
+  
+  
+  
+  
+  loadCSS("https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/styles/solarized-light.min.css", window.volantis.loadcss);
+  
+</script>
+<!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+<script>
+  function pjax_fancybox() {
+    $(".md .gallery").find("img").each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".md .gallery").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  function SCload_fancybox() {
+    if ($(".md .gallery").find("img").length == 0) return;
+    loadCSS("https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css", document.getElementById("loadcss"));
+    loadScript('https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', pjax_fancybox)
+  };
+  $(function () {
+    SCload_fancybox();
+  });
+  function Pjax_SCload_fancybox(){
+	if (typeof $.fancybox == "undefined") {
+	 SCload_fancybox();
+    } else {
+	 pjax_fancybox();
+    }
+  }
+  volantis.pjax.push(Pjax_SCload_fancybox)
+  volantis.pjax.send(()=>{
+      if (typeof $.fancybox != "undefined") {
+        $.fancybox.close();    // 关闭弹窗
+      }
+  },'fancybox')
+</script>
+
+
+<!-- internal -->
+
+  
+  
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+        var imgs=["https://cdn.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/41F215B9-261F-48B4-80B5-4E86E165259E.jpeg"];
+        if ('true' == 'true') {
+          function shuffle(arr){
+            /*From countercurrent-time*/
+            var n = arr.length;
+            while(n--) {
+              var index = Math.floor(Math.random() * n);
+              var temp = arr[index];
+              arr[index] = arr[n];
+              arr[n] = temp;
+            }
+          }
+          shuffle(imgs);
+        }
+	  function Pjax_backstretch(){
+        
+          $('#cover-backstretch').backstretch(
+            imgs,
+          {
+            duration: "20000",
+            fade: "1500"
+          });
+        
+	  }
+	  loadScript("https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js",Pjax_backstretch)
+    </script>
+  
+
+
+
+  
+  
+
+  <div id="rightmenu-wrapper">
+    <ul class="list-v rightmenu" id="rightmenu-content">
+      <li class='option'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-text' onclick="document.execCommand('copy')"><i class='fa fa-copy fa-fw'></i>复制文本</a>
+        <hr id='hr-text'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-href'><i class='fa fa-link fa-fw'></i>复制链接</a>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-open-href'><i class='fa fa-external-link-square-alt fa-fw'></i>在新标签页打开</a>
+        <hr id='hr-href'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-src'><i class='fa fa-image fa-fw'></i>复制图片地址</a>
+        <hr id='hr-src'>
+      </li>
+      
+        <li class='navigation'>
+          <a class='nav icon-only fix-cursor-default' onclick='history.back()'><i class='fa fa-arrow-left fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' onclick='history.forward()'><i class='fa fa-arrow-right fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' onclick='window.location.reload()'><i class='fa fa-redo fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' href='/'><i class='fa fa-home fa-fw'></i></a>
+        </li>
+      
+      <hr>
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default ' 
+        
+        
+        
+          onclick="document.execCommand('print')"
+        
+        >
+        <i class='fa fa-print fa-fw'></i> 打印页面
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default toggle-mode-btn' 
+        
+        
+        
+        >
+        <i class='fas fa-moon fa-fw'></i> Dark mode
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          <li class='music name'>
+            <p class='nav music-title fix-cursor-default'></p>
+          </li>
+          <li class='music ctrl'>
+            <a class='nav icon-only backward fix-cursor-default' onclick='aplayerBackward()'><i class='fa fa-step-backward fa-fw'></i></a>
+            <a class='nav icon-only toggle fix-cursor-default' onclick='aplayerToggle()'><i class='fa fa-play fa-fw'></i></a>
+            <a class='nav icon-only forward fix-cursor-default' onclick='aplayerForward()'><i class='fa fa-step-forward fa-fw'></i></a>
+          </li>
+          <li class='music volume'>
+            <a class='nav volume'>
+              <div class="aplayer-volume-bar-wrap">
+                <div class="aplayer-volume-bar fix-cursor-pointer">
+                  <div class="aplayer-volume"></div>
+                  <i class='left fa fa-volume-off fa-fw'></i>
+                  <i class='right fa fa-volume-up fa-fw'></i>
+                </div>
+              </div>
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+  <script>
+    window.document.oncontextmenu = function (event) {
+      if (event.ctrlKey) return true;
+      if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true;
+      return popMenu(event);
+    };
+    document.addEventListener("click", function (event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      mymenu.style.display = "none";
+    });
+    function popMenu(event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      var menuContent = document.getElementById('rightmenu-content');
+      var screenWidth = document.documentElement.clientWidth || document.body.clientWidth;
+      var screenHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      mymenu.style.left = event.clientX + "px"; // 获取鼠标位置
+      mymenu.style.top = event.clientY + "px";
+      mymenu.style.display = 'block';
+      if (event.clientX * 2 > screenWidth) {
+        menuContent.classList.add('left');
+      } else {
+        menuContent.classList.remove('left');
+      }
+      if (event.clientY * 2 > screenHeight) {
+        menuContent.classList.add('top');
+      } else {
+        menuContent.classList.remove('top');
+      }
+
+      let hrText = document.getElementById('hr-text');
+      let hrSrc = document.getElementById('hr-src');
+      let hrHref = document.getElementById('hr-href');
+
+      // 选中图片
+      let copySrc = document.getElementById('menu-copy-src');
+      if (copySrc != undefined) {
+        if (event.target.currentSrc) {
+          copySrc.style.display = 'block';
+          copySrc.addEventListener("click", function (e) {
+            copyString(event.target.currentSrc);
+          },{once: true});
+          hrSrc.style.display = 'block';
+        } else {
+          copySrc.style.display = 'none';
+          hrSrc.style.display = 'none';
+        }
+      }
+
+      // 选中按钮
+      // 判断是不是按钮
+      let href = '';
+      if (event.path) {
+        for (i = 0; i < event.path.length; i++) {
+          if (event.path[i].href != undefined && event.path[i].href.length > 0) {
+            href = event.path[i].href;
+          }
+        }
+      }
+
+      let copyText = document.getElementById('menu-copy-text');
+      copyText.style.display = 'none';
+      hrText.style.display = 'none';
+      if (href.length == 0) {
+        // 选中文本
+        if (window.getSelection().toString()) {
+          if ('true' == 'true') {
+            copyText.style.display = 'block';
+            hrText.style.display = 'block';
+          }
+        }
+      }
+
+      // 在新标签页打开
+      let openHref = document.getElementById('menu-open-href');
+      if (openHref != undefined) {
+        if (href.length > 0) {
+          openHref.style.display = 'block';
+          openHref.addEventListener("click", function (e) {
+            window.open(href);
+          },{once: true});
+          hrHref.style.display = 'block';
+        } else {
+          openHref.style.display = 'none';
+          hrHref.style.display = 'none';
+        }
+      }
+      // 复制链接
+      let copyHref = document.getElementById('menu-copy-href');
+      if (copyHref != undefined) {
+        if (href.length > 0) {
+          copyHref.style.display = 'block';
+          copyHref.addEventListener("click", function (e) {
+            copyString(href);
+          },{once: true});
+        } else {
+          copyHref.style.display = 'none';
+        }
+      }
+      // 有音乐播放器 see: layout/_third-party/aplayer/script.ejs
+      
+      if(volantis.APlayerLoaded){ // APlayer加载完成？
+        // 如果有aplayer，初始化一下
+        checkAPlayer();
+      }
+      
+      return false; // 该行代码确保系统自带的右键菜单不会被调出
+    }
+    function hideMenu() {
+      document.getElementById('rightmenu-wrapper').style.display = 'none';
+    }
+    function copyString(str) {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      document.body.appendChild(input);
+      input.setAttribute('value', str);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    }
+    document.execCommand('click');
+  </script>
+
+
+
+
+<script>
+  function loadIssuesJS() {
+    if ($(".md").find(".issues-api").length == 0) return;
+	
+	  loadScript('/js/issues.js');
+	
+  };
+  $(function () {
+    loadIssuesJS();
+  });
+  volantis.pjax.push(()=>{
+	if (typeof IssuesAPI == "undefined") {
+	  loadIssuesJS();
+	}
+  },"IssuesJS")
+</script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 0
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    lazyLoadInstance.update();
+  });
+  document.addEventListener('pjax:complete', function () {
+    lazyLoadInstance.update();
+  });
+</script>
+
+
+
+
+  
+
+<script>
+  window.FPConfig = {
+	delay: 0,
+	ignoreKeywords: [],
+	maxRPS: 5,
+	hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+	volantis.pjax.push(pjax_initCopyCode)
+</script>
+
+
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '3175833810';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+  loadCSS("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css", window.volantis.loadcss);
+  // APlayer 需要在  MetingJS 之前加载
+  loadScript("https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js")
+  window.volantis.APlayerLoaded=0 // APlayer加载完成状态
+  var checkAPlayer = setInterval(function () {
+    if (!window.APlayer) return // APlayer加载完成？
+	  if ($("#safearea").css("display")!="block") return // 文章内容加载完成？ see: source/css/first.styl
+    clearInterval(checkAPlayer)
+	  if (!window.volantis.APlayerLoaded&&!window.MetingJSElement){ // APlayer只能加载一次
+      window.volantis.APlayerLoaded=1 // APlayer加载完成
+      loadScript("https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js") // 加载 MetingJS
+	  }
+  }, 2500) // 按照网速调节差分2.5s
+  // rightmenu see: layout/_partial/rightmenu.ejs
+
+  
+    loadScript("/js/aplayer.js")
+  
+
+</script>
+
+
+
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"></script>
+
+
+<script>
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  function pjax_valine() {
+    if(!document.querySelectorAll("#valine_container")[0])return;
+    let pagePlaceholder = pdata.commentPlaceholder || "快来评论啊~";
+    let path = pdata.commentPath;
+    if (path.length == 0) {
+      let defaultPath = '/';
+      path = defaultPath || decodeURI(window.location.pathname);
+    }
+    var valine = new Valine();
+    valine.init(Object.assign({"path":"/","placeholder":"快来评论啊~","appId":"0BeyVbHDkQX24Fe67Ramvgqj-gzGzoHsz","appKey":"Ar5VCkWBPCxn5iMCYsdm1e6h","meta":["nick"],"requiredFields":[],"enableQQ":true,"recordIP":false,"avatar":"robohash","pageSize":10,"lang":"zh-cn","highlight":true,"mathJax":false,"js":"https://cdn.jsdelivr.net/npm/valine@1.4/dist/Valine.min.js"}, {
+      el: '#valine_container',
+      path: path,
+      placeholder: pagePlaceholder,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps,
+    }))
+  }
+  $(function () {
+    pjax_valine();
+  });
+  volantis.pjax.push(pjax_valine);
+</script>
+
+
+
+
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+<!-- optional -->
+
+  <script>
+const SearchServiceimagePath="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@master/img/";
+const ROOT =  ("/" || "/").endsWith('/') ? ("/" || "/") : ("//" || "/" );
+
+$('.input.u-search-input').one('focus',function(){
+	
+		loadScript('/js/search/hexo.js',setSearchService);
+	
+})
+
+function listenSearch(){
+  
+    customSearch = new HexoSearch({
+      imagePath: SearchServiceimagePath
+    });
+  
+}
+function setSearchService() {
+	listenSearch();
+	
+}
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10/build/highlight.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+volantis.pjax.push(()=>{
+	document.querySelectorAll('pre code').forEach((block) => {
+	  hljs.highlightBlock(block);
+	});
+},"highlightjs")
+</script>
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'https://www.iwhero.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'https://www.iwhero.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'https://www.iwhero.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              let curPath = window.location.pathname;
+              if (curPath.includes('index.html')) {
+                curPath = curPath.substring(0, curPath.lastIndexOf('index.html'));
+              }
+              if (pv.getAttribute('data-path') == curPath) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == curPath) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+
+  <script>
+const rootElement = document.documentElement;
+const darkModeStorageKey = "user-color-scheme";
+const rootElementDarkModeAttributeName = "data-user-color-scheme";
+
+const setLS = (k, v) => {
+    localStorage.setItem(k, v);
+};
+
+const removeLS = (k) => {
+    localStorage.removeItem(k);
+};
+
+const getLS = (k) => {
+    return localStorage.getItem(k);
+};
+
+const getModeFromCSSMediaQuery = () => {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const resetRootDarkModeAttributeAndLS = () => {
+  rootElement.removeAttribute(rootElementDarkModeAttributeName);
+  removeLS(darkModeStorageKey);
+};
+
+const validColorModeKeys = {
+  dark: true,
+  light: true,
+};
+
+const applyCustomDarkModeSettings = (mode) => {
+  const currentSetting = mode || getLS(darkModeStorageKey);
+
+  if (currentSetting === getModeFromCSSMediaQuery()) {
+    resetRootDarkModeAttributeAndLS();
+  } else if (validColorModeKeys[currentSetting]) {
+    rootElement.setAttribute(rootElementDarkModeAttributeName, currentSetting);
+  } else {
+    resetRootDarkModeAttributeAndLS();
+  }
+};
+
+const invertDarkModeObj = {
+  dark: "light",
+  light: "dark",
+};
+
+/**
+ * get target mode
+ */
+const toggleCustomDarkMode = () => {
+  let currentSetting = getLS(darkModeStorageKey);
+
+  if (validColorModeKeys[currentSetting]) {
+    currentSetting = invertDarkModeObj[currentSetting];
+  } else if (currentSetting === null) {
+    currentSetting = invertDarkModeObj[getModeFromCSSMediaQuery()];
+  } else {
+    return;
+  }
+  setLS(darkModeStorageKey, currentSetting);
+  return currentSetting;
+};
+
+/**
+ * bind click event for toggle button
+ */
+var btn=$("#wrapper .toggle-mode-btn,#rightmenu-wrapper .toggle-mode-btn");
+function bindToggleButton() {
+    btn.on('click',(e) => {
+      const mode = toggleCustomDarkMode();
+      applyCustomDarkModeSettings(mode);
+    });
+}
+
+applyCustomDarkModeSettings();
+document.addEventListener("DOMContentLoaded", bindToggleButton);
+volantis.pjax.push(bindToggleButton);
+volantis.pjax.send(()=>{
+	btn.unbind('click');
+},'toggle-mode-btn-unbind');
+</script>
+
+
+
+
+
+
+
+
+<script>
+function listennSidebarTOC() {
+  const navItems = document.querySelectorAll(".toc li");
+  if (!navItems.length) return;
+  const sections = [...navItems].map((element) => {
+    const link = element.querySelector(".toc-link");
+    const target = document.getElementById(
+      decodeURI(link.getAttribute("href")).replace("#", "")
+    );
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+		top: target.offsetTop + 100,
+		
+		behavior: "smooth"
+		
+	  });
+    });
+    return target;
+  });
+
+  function activateNavByIndex(target) {
+    if (target.classList.contains("active-current")) return;
+
+    document.querySelectorAll(".toc .active").forEach((element) => {
+      element.classList.remove("active", "active-current");
+    });
+    target.classList.add("active", "active-current");
+    let parent = target.parentNode;
+    while (!parent.matches(".toc")) {
+      if (parent.matches("li")) parent.classList.add("active");
+      parent = parent.parentNode;
+    }
+  }
+
+  function findIndex(entries) {
+    let index = 0;
+    let entry = entries[index];
+    if (entry.boundingClientRect.top > 0) {
+      index = sections.indexOf(entry.target);
+      return index === 0 ? 0 : index - 1;
+    }
+    for (; index < entries.length; index++) {
+      if (entries[index].boundingClientRect.top <= 0) {
+        entry = entries[index];
+      } else {
+        return sections.indexOf(entry.target);
+      }
+    }
+    return sections.indexOf(entry.target);
+  }
+
+  function createIntersectionObserver(marginTop) {
+    marginTop = Math.floor(marginTop + 10000);
+    let intersectionObserver = new IntersectionObserver(
+      (entries, observe) => {
+        let scrollHeight = document.documentElement.scrollHeight + 100;
+        if (scrollHeight > marginTop) {
+          observe.disconnect();
+          createIntersectionObserver(scrollHeight);
+          return;
+        }
+        let index = findIndex(entries);
+        activateNavByIndex(navItems[index]);
+      },
+      {
+        rootMargin: marginTop + "px 0px -100% 0px",
+        threshold: 0,
+      }
+    );
+    sections.forEach((element) => {
+      element && intersectionObserver.observe(element);
+    });
+  }
+  createIntersectionObserver(document.documentElement.scrollHeight);
+}
+
+document.addEventListener("DOMContentLoaded", listennSidebarTOC);
+document.addEventListener("pjax:success", listennSidebarTOC);
+</script>
+
+<!-- more -->
+
+ 
+	   
+	    
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      //window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+
+      volantis.$switcher.removeClass('active'); // 关闭移动端激活的搜索框
+      volantis.$header.removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      volantis.$wrapper.removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      volantis.$topBtn.unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+	  // 使用 volantis.pjax.send 方法传入pjax:send回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.send.start();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+		// 使用 volantis.pjax.push 方法传入重载函数 参见layout/_partial/scripts/global.ejs
+		volantis.pjax.method.complete.start();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+	  // 使用 volantis.pjax.error 方法传入pjax:error回调函数 参见layout/_partial/scripts/global.ejs
+	  volantis.pjax.method.error.start();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+ 
+	  
+    </div>
+  </body>
+</html>

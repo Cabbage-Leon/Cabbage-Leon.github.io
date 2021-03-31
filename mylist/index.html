@@ -408,6 +408,38 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         
       
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
     </section>
   
 </div>
@@ -493,24 +525,44 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <ul class="entry navigation">
         
           <li><a class="flat-box"
-            title="/categories/elasticsearch/" href="/categories/elasticsearch/"
-            id="categorieselasticsearch"
-            ><div class='name'>elasticsearch</div><div class='badge'>(1)</div></a></li>
-        
-          <li><a class="flat-box child"
-            title="/categories/elasticsearch/docker/" href="/categories/elasticsearch/docker/"
-            id="categorieselasticsearchdocker"
+            title="/categories/docker/" href="/categories/docker/"
+            id="categoriesdocker"
             ><div class='name'>docker</div><div class='badge'>(1)</div></a></li>
         
-          <li><a class="flat-box child"
-            title="/categories/elasticsearch/docker/Kibana/" href="/categories/elasticsearch/docker/Kibana/"
-            id="categorieselasticsearchdockerKibana"
-            ><div class='name'>Kibana</div><div class='badge'>(1)</div></a></li>
+          <li><a class="flat-box"
+            title="/categories/elasticsearch/" href="/categories/elasticsearch/"
+            id="categorieselasticsearch"
+            ><div class='name'>elasticsearch</div><div class='badge'>(2)</div></a></li>
         
           <li><a class="flat-box"
             title="/categories/hexo/" href="/categories/hexo/"
             id="categorieshexo"
             ><div class='name'>hexo</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/k8s/" href="/categories/k8s/"
+            id="categoriesk8s"
+            ><div class='name'>k8s</div><div class='badge'>(14)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/kibana/" href="/categories/kibana/"
+            id="categorieskibana"
+            ><div class='name'>kibana</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/nest/" href="/categories/nest/"
+            id="categoriesnest"
+            ><div class='name'>nest</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/net/" href="/categories/net/"
+            id="categoriesnet"
+            ><div class='name'>net</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box"
+            title="/categories/xunit/" href="/categories/xunit/"
+            id="categoriesxunit"
+            ><div class='name'>xunit</div><div class='badge'>(1)</div></a></li>
         
       </ul>
     </div>
@@ -534,7 +586,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-      <a href="/tags/Kibana/" style="font-size: 14px; color: #999">Kibana</a> <a href="/tags/docker/" style="font-size: 14px; color: #999">docker</a> <a href="/tags/elasticsearch/" style="font-size: 14px; color: #999">elasticsearch</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/volantis/" style="font-size: 14px; color: #999">volantis</a>
+      <a href="/tags/Kibana/" style="font-size: 14px; color: #999">Kibana</a> <a href="/tags/docker/" style="font-size: 14px; color: #999">docker</a> <a href="/tags/elasticsearch/" style="font-size: 19px; color: #777">elasticsearch</a> <a href="/tags/k8s/" style="font-size: 24px; color: #555">k8s</a> <a href="/tags/markdown/" style="font-size: 14px; color: #999">markdown</a> <a href="/tags/nest/" style="font-size: 14px; color: #999">nest</a> <a href="/tags/net/" style="font-size: 14px; color: #999">net</a> <a href="/tags/volantis/" style="font-size: 14px; color: #999">volantis</a> <a href="/tags/xunit/" style="font-size: 14px; color: #999">xunit</a>
     </div>
   </section>
 
@@ -578,7 +630,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>文章数目：</div>
-          <div>3 篇</div>
+          <div>19 篇</div>
         </div>
       
 
@@ -621,8 +673,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class="webinfo-item">
           <div>最后活动时间：</div>
           
-            <div id="last-update" style="display: none;">Wed Mar 10 2021 20:51:38 GMT+0800 (China Standard Time)</div>
-            <div id="last-update-show">2021-03-10 日</div>
+            <div id="last-update" style="display: none;">Wed Mar 31 2021 15:34:53 GMT+0800 (China Standard Time)</div>
+            <div id="last-update-show">2021-03-31 日</div>
           
         </div>
         
@@ -672,7 +724,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           try {
             document.getElementById('last-update-show').innerHTML = timeago(new Date(lastUpDate));
           } catch (error) {
-            document.getElementById('last-update-show').innerHTML = '2021-03-10 日';
+            document.getElementById('last-update-show').innerHTML = '2021-03-31 日';
           }
         </script>
         
@@ -1181,7 +1233,7 @@ var loadCSS = function( href, before, media, attributes ){
       if (href.length == 0) {
         // 选中文本
         if (window.getSelection().toString()) {
-          if ('' == 'true') {
+          if ('true' == 'true') {
             copyText.style.display = 'block';
             hrText.style.display = 'block';
           }
@@ -1303,6 +1355,62 @@ var loadCSS = function( href, before, media, attributes ){
 
 
 
+
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+		if($(".highlight .code pre").length+$(".article pre code").length==0)return;
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+	volantis.pjax.push(pjax_initCopyCode)
+</script>
 
 
 

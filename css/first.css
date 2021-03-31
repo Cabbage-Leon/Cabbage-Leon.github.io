@@ -26,12 +26,6 @@
   font-style: 'normal';
 }
 @font-face {
-  font-family: 'Monaco';
-  src: url("https://cdn.jsdelivr.net/gh/volantis-x/cdn-fonts/Monaco/Monaco.ttf");
-  font-weight: 'normal';
-  font-style: 'normal';
-}
-@font-face {
   font-family: 'Varela Round';
   src: url("https://cdn.jsdelivr.net/gh/volantis-x/cdn-fonts/VarelaRound/VarelaRound-Regular.ttf");
   font-weight: 'normal';
@@ -45,14 +39,14 @@
   --color-card: #fff;
   --color-text: #444;
   --color-block: #f6f6f6;
-  --color-inlinecode: #d56d28;
+  --color-inlinecode: #c74f00;
   --color-codeblock: #fff7ea;
-  --color-h1: #444;
-  --color-h2: #444;
-  --color-h3: #444;
+  --color-h1: #3a3a3a;
+  --color-h2: #3a3a3a;
+  --color-h3: #333;
   --color-h4: #444;
-  --color-h5: #444;
-  --color-h6: #444;
+  --color-h5: #555;
+  --color-h6: #666;
   --color-p: #444;
   --color-list: #666;
   --color-list-hl: #36ac91;
@@ -68,7 +62,7 @@ html {
   color: var(--color-text);
   width: 100%;
   height: 100%;
-  font-family: UbuntuMono, "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
+  font-family: UbuntuMono, "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
   font-size: 16px;
 }
 html >::-webkit-scrollbar {
@@ -949,7 +943,7 @@ th {
 }
 .l_header .nav-sub .title {
   font-weight: bold;
-  font-family: UbuntuMono, "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
+  font-family: UbuntuMono, "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
   line-height: 1.2;
   max-height: 64px;
   white-space: normal;
@@ -1750,7 +1744,7 @@ ul.list-v >li>a:hover {
     --color-site-bg: #222;
     --color-site-inner: #eee;
     --color-site-footer: #aaa;
-    --color-card: #444;
+    --color-card: #333;
     --color-text: #eee;
     --color-block: #3a3a3a;
     --color-codeblock: #343a3c;
@@ -1925,7 +1919,7 @@ ul.list-v >li>a:hover {
   --color-site-bg: #222;
   --color-site-inner: #eee;
   --color-site-footer: #aaa;
-  --color-card: #444;
+  --color-card: #333;
   --color-text: #eee;
   --color-block: #3a3a3a;
   --color-codeblock: #343a3c;
